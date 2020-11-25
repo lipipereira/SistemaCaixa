@@ -1,0 +1,149 @@
+﻿unit uClasseMovimentacao;
+
+interface
+
+uses
+  uConn, Data.SqlExpr, Data.DB,System.classes,StrUtils;
+
+Type
+    TMovimento = class
+    private
+    // A varialve Conex�o receber a class da Unit uConn
+    Conexao: TConn;
+    // propriendades do usuario
+    FId : String;
+    FDescri : string;
+    FIdCon : String;
+    FValor : String;
+    FDtOpe : string;
+
+    FQry: TSQLQuery;
+    FDs: TDataSource;
+    FDsPesquisa: TDataSource;
+    FQryPesquisa: TSQLQuery;
+    procedure SetDs(const Value: TDataSource);
+    procedure SetDsPesquisa(const Value: TDataSource);
+    procedure SetDtOpe(const Value: String);
+    procedure SetId(const Value: String);
+    procedure SetIdCon(const Value: String);
+    procedure SetDescri(const Value: String);
+    procedure SetQry(const Value: TSQLQuery);
+    procedure SetQryPesquisa(const Value: TSQLQuery);
+    procedure SetValor(const Value: String);
+
+    public
+    constructor Create(Conn : TConn);
+
+    // Propriedades
+    property Id : String read FId write SetId;
+    property Descri : String read FDescri write SetDescri;
+    property DtOpe: String read FDtOpe write SetDtOpe;
+    property Valor: String read FValor write SetValor;
+    property IdCon: String read FIdCon write SetIdCon;
+
+    // Componentes
+    property Qry : TSQLQuery read FQry write SetQry;
+    property QryPesquisa : TSQLQuery read FQryPesquisa write SetQryPesquisa;
+    property Ds : TDataSource read FDs write SetDs;
+    property DsPesquisa : TDataSource read FDsPesquisa write SetDsPesquisa;
+
+    // Metodos
+    function Inserir : Boolean;
+    {function UltimoRegistro : Integer;
+    function Alterar : Boolean;
+    function Status( Id : String ) : String;
+    function TipoContaAlter ( Id : String ) : Integer; }
+end;
+
+
+implementation
+
+uses
+  System.SysUtils, uBancoDados;
+
+{ TMovimento }
+
+{ TMovimento }
+
+constructor TMovimento.Create(Conn: TConn);
+begin
+  Conexao := Conn;
+  Qry := TSQLQuery.Create(nil);
+  Ds := TDataSource.Create(nil);
+
+  QryPesquisa := TSQLQuery.Create(nil);
+  DsPesquisa := TDataSource.Create(nil);
+  // Conecta a Query no TSQLconnection
+  Qry.SQLConnection := Conexao.ConexaoBanco;
+  QryPesquisa.SQLConnection := Conexao.ConexaoBanco;
+
+  Ds.DataSet := Qry;
+  DsPesquisa.DataSet := QryPesquisa;
+end;
+
+function TMovimento.Inserir: Boolean;
+begin
+  with Qry do begin
+    Close;
+    SQL.Text := ' insert into fimov( cdcon, valor, dtope, descri ) ' +
+                ' values ( :CDCON, :VALOR, :DTOPE, :DESCRI ) ';
+    Params.ParamByName('CDCON').Value := FIdCon;
+    Params.ParamByName('VALOR').Value := FValor;
+    Params.ParamByName('DTOPE').Value := StrToDate( FDtOpe );
+    Params.ParamByName('DESCRI').Value := FDescri;
+    try
+      ExecSQL();
+      DM.cdsMov.Refresh;
+      Result := True; // Retorna True se Executa sem erro
+    except
+      Result := False; // Retorna False se Executa com erro
+    end;
+  end;
+end;
+
+procedure TMovimento.SetDs(const Value: TDataSource);
+begin
+  FDs := Value;
+end;
+
+procedure TMovimento.SetDsPesquisa(const Value: TDataSource);
+begin
+  FDsPesquisa := Value;
+end;
+
+procedure TMovimento.SetDtOpe(const Value: String);
+begin
+  FDtOpe := Value;
+end;
+
+procedure TMovimento.SetId(const Value: String);
+begin
+  FId := Value;
+end;
+
+procedure TMovimento.SetIdCon(const Value: String);
+begin
+  FIdCon := Value;
+end;
+
+procedure TMovimento.SetDescri(const Value: String);
+begin
+  FDescri := Value;
+end;
+
+procedure TMovimento.SetQry(const Value: TSQLQuery);
+begin
+  FQry := Value;
+end;
+
+procedure TMovimento.SetQryPesquisa(const Value: TSQLQuery);
+begin
+  FQryPesquisa := Value;
+end;
+
+procedure TMovimento.SetValor(const Value: String);
+begin
+  FValor := Value;
+end;
+
+end.

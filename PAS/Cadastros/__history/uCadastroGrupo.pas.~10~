@@ -1,0 +1,60 @@
+unit uCadastroGrupo;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
+  uClasseGrupo, uConn;
+
+type
+  TfrmCadGrupo = class(TForm)
+    pnCodigo: TPanel;
+    edtNomeGrupo: TEdit;
+    btnConfirmar: TBitBtn;
+    Label1: TLabel;
+    Label2: TLabel;
+    procedure btnConfirmarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCadGrupo: TfrmCadGrupo;
+  Conn : TConn;
+  Grupo : TGrupo;
+
+implementation
+
+{$R *.dfm}
+
+uses uTrataException;
+
+procedure TfrmCadGrupo.btnConfirmarClick(Sender: TObject);
+begin
+  with Grupo do begin
+    Nome := edtNomeGrupo.Text;
+    // Inserir no banco
+    if Inserir then
+      Application.MessageBox('Concluido!','Confirmação',MB_OK)
+    else
+      Application.MessageBox('O registro não foi alterado!','Atenção',MB_OK);
+  end;
+end;
+
+procedure TfrmCadGrupo.FormCreate(Sender: TObject);
+begin
+  Conn := TConn.Create;
+  Grupo := TGrupo.Create(Conn);
+end;
+
+procedure TfrmCadGrupo.FormShow(Sender: TObject);
+begin
+  pnCodigo.Caption := IntToStr(Grupo.UltimoRegistro);
+end;
+
+end.

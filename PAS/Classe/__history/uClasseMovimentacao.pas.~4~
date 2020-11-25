@@ -1,0 +1,134 @@
+﻿unit uClasseMovimentacao;
+
+interface
+
+uses
+  uConn, Data.SqlExpr, Data.DB,System.classes,StrUtils;
+
+Type
+    TMovimento = class
+    private
+    // A varialve Conex�o receber a class da Unit uConn
+    Conexao: TConn;
+    // propriendades do usuario
+    FId : String;
+    FNome : string;
+    FIdGru : String;
+    FTpCon : String;
+    FDtOpe : string;
+    FInativo : String;
+
+    FQry: TSQLQuery;
+    FDs: TDataSource;
+    FDsPesquisa: TDataSource;
+    FQryPesquisa: TSQLQuery;
+    procedure SetDs(const Value: TDataSource);
+    procedure SetDsPesquisa(const Value: TDataSource);
+    procedure SetDtOpe(const Value: String);
+    procedure SetId(const Value: String);
+    procedure SetIdGru(const Value: String);
+    procedure SetInativo(const Value: String);
+    procedure SetNome(const Value: String);
+    procedure SetQry(const Value: TSQLQuery);
+    procedure SetQryPesquisa(const Value: TSQLQuery);
+    procedure SetTpCon(const Value: String);
+
+    public
+    constructor Create(Conn : TConn);
+
+    // Propriedades
+    property Id : String read FId write SetId;
+    property Nome : String read FNome write SetNome;
+    property DtOpe: String read FDtOpe write SetDtOpe;
+    property Inativo: String read FInativo write SetInativo;
+    property TpCon: String read FTpCon write SetTpCon;
+    property IdGru: String read FIdGru write SetIdGru;
+
+    // Componentes
+    property Qry : TSQLQuery read FQry write SetQry;
+    property QryPesquisa : TSQLQuery read FQryPesquisa write SetQryPesquisa;
+    property Ds : TDataSource read FDs write SetDs;
+    property DsPesquisa : TDataSource read FDsPesquisa write SetDsPesquisa;
+
+    // Metodos
+    {function Inserir : Boolean;
+    function UltimoRegistro : Integer;
+    function Alterar : Boolean;
+    function Status( Id : String ) : String;
+    function TipoContaAlter ( Id : String ) : Integer; }
+end;
+
+
+implementation
+
+{ TMovimento }
+
+{ TMovimento }
+
+constructor TMovimento.Create(Conn: TConn);
+begin
+  Conexao := Conn;
+  Qry := TSQLQuery.Create(nil);
+  Ds := TDataSource.Create(nil);
+
+  QryPesquisa := TSQLQuery.Create(nil);
+  DsPesquisa := TDataSource.Create(nil);
+  // Conecta a Query no TSQLconnection
+  Qry.SQLConnection := Conexao.ConexaoBanco;
+  QryPesquisa.SQLConnection := Conexao.ConexaoBanco;
+
+  Ds.DataSet := Qry;
+  DsPesquisa.DataSet := QryPesquisa;
+end;
+
+procedure TMovimento.SetDs(const Value: TDataSource);
+begin
+  FDs := Value;
+end;
+
+procedure TMovimento.SetDsPesquisa(const Value: TDataSource);
+begin
+  FDsPesquisa := Value;
+end;
+
+procedure TMovimento.SetDtOpe(const Value: String);
+begin
+  FDtOpe := Value;
+end;
+
+procedure TMovimento.SetId(const Value: String);
+begin
+  FId := Value;
+end;
+
+procedure TMovimento.SetIdGru(const Value: String);
+begin
+  FIdGru := Value;
+end;
+
+procedure TMovimento.SetInativo(const Value: String);
+begin
+  FInativo := Value;
+end;
+
+procedure TMovimento.SetNome(const Value: String);
+begin
+  FNome := Value;
+end;
+
+procedure TMovimento.SetQry(const Value: TSQLQuery);
+begin
+  FQry := Value;
+end;
+
+procedure TMovimento.SetQryPesquisa(const Value: TSQLQuery);
+begin
+  FQryPesquisa := Value;
+end;
+
+procedure TMovimento.SetTpCon(const Value: String);
+begin
+  FTpCon := Value;
+end;
+
+end.

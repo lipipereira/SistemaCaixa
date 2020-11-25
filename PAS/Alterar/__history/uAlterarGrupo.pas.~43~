@@ -1,0 +1,84 @@
+unit uAlterarGrupo;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
+  uClasseGrupo, uConn, Vcl.DBCtrls;
+
+type
+  TfrmAlterGrupo = class(TForm)
+    edtNomeGrupo: TEdit;
+    Label1: TLabel;
+    pnCodGrupo: TPanel;
+    Label2: TLabel;
+    btnCancelar: TBitBtn;
+    btnConfirmar: TBitBtn;
+    CheckBox1: TCheckBox;
+    procedure FormCreate(Sender: TObject);
+    procedure btnConfirmarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmAlterGrupo: TfrmAlterGrupo;
+  Conn : TConn;
+  Grupo : TGrupo;
+
+implementation
+
+{$R *.dfm}
+
+uses uBancoDados, uTrataException, uLibrary;
+
+procedure TfrmAlterGrupo.btnCancelarClick(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TfrmAlterGrupo.btnConfirmarClick(Sender: TObject);
+begin
+  with Grupo do begin
+    Nome := edtNomeGrupo.Text;
+    Inativo := VerificaInativo(CheckBox1.Checked);
+    Id := pnCodGrupo.Caption;
+    if Alterar then begin
+      Application.MessageBox('Concluido!','Confirmação',MB_OK);
+      Close;
+    end else begin
+      Application.MessageBox('O registro não foi alterado!','Atenção',MB_OK);
+    end;
+  end;
+end;
+
+procedure TfrmAlterGrupo.FormCreate(Sender: TObject);
+begin
+  Conn := TConn.Create;
+  Grupo := TGrupo.Create(Conn);
+end;
+
+procedure TfrmAlterGrupo.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+    Close;
+end;
+
+procedure TfrmAlterGrupo.FormShow(Sender: TObject);
+begin
+  pnCodGrupo.Caption := DM.cdsGrupo.Fields[0].Text;
+  edtNomeGrupo.Text := DM.cdsGrupo.Fields[1].Text;
+  if Grupo.Status(pnCodGrupo.Caption) = 'S' then
+    CheckBox1.Checked := True
+  else
+    CheckBox1.Checked := False;
+end;
+
+end.
