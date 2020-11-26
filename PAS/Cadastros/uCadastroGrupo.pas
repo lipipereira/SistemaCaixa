@@ -55,6 +55,7 @@ end;
 
 procedure TfrmCadGrupo.FormCreate(Sender: TObject);
 begin
+  // Instancia Class no Form
   Conn := TConn.Create;
   Grupo := TGrupo.Create(Conn);
 end;
@@ -68,6 +69,7 @@ end;
 
 procedure TfrmCadGrupo.FormShow(Sender: TObject);
 begin
+  // Pega o ultimo registro do banco e adciona mais 1 e colocar no Panel
   pnCodigo.Caption := IntToStr(Grupo.UltimoRegistro);
 end;
 

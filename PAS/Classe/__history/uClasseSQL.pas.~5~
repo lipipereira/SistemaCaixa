@@ -1,0 +1,25 @@
+unit uClasseSQL;
+
+interface
+uses
+  System.SysUtils,Vcl.Forms, System.Classes, frxClass,IniFiles,System.UITypes,
+  Windows,Dialogs,Vcl.StdCtrls,System.Variants,Vcl.Mask,Vcl.Controls,Vcl.CheckLst;
+
+  // Função para retorna SQl do Relatorio
+  function SQL_Relatorio : String;
+
+implementation
+
+// Função para retorna SQl do Relatorio
+function SQL_Relatorio : String;
+begin
+  Result := ' select con.nmcon, mov.dtope, mov.descri,  ' +
+            ' sum( case when con.tpcon = ''R'' then mov.valor else 0 end) AS Entradas, ' +
+            ' sum( case when con.tpcon = ''D'' then mov.valor else 0.00 end) AS Saidas ' +
+            ' from fimov mov ' +
+            ' left join ficon con on con.cdcon = mov.cdcon' +
+            ' group by con.nmcon, mov.dtope, mov.descri ';
+end;
+
+
+end.

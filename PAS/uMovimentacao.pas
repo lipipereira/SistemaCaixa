@@ -39,6 +39,7 @@ uses uBancoDados, uLibrary, uTrataException,
 
 procedure TfrmMovimentacao.btnAlterarClick(Sender: TObject);
 begin
+  // Criar form de alterar Movimentação
   CriarForm(TfrmAlterMovimetacao,frmAlterMovimetacao);
 end;
 
@@ -53,16 +54,19 @@ end;
 
 procedure TfrmMovimentacao.btnInserirClick(Sender: TObject);
 begin
+  // Criar form de cadastro Movimentação
   CriarForm(TfrmCadMovimetacao,frmCadMovimetacao);
 end;
 
 procedure TfrmMovimentacao.DBGrid1DblClick(Sender: TObject);
 begin
+// Criar form de alterar Movimentação ao clica duas vezes na linha
   CriarForm(TfrmAlterMovimetacao,frmAlterMovimetacao);
 end;
 
 procedure TfrmMovimentacao.FormCreate(Sender: TObject);
 begin
+  // Instacia as Class do Form
   Conn := TConn.Create;
   Mov := TMovimento.Create(Conn);
 end;

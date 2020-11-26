@@ -21,7 +21,8 @@ uses
   uAlterMovimentacao in '..\PAS\Alterar\uAlterMovimentacao.pas' {frmAlterMovimetacao},
   uRelatorio in '..\PAS\Relatorio\uRelatorio.pas' {frmRelatorio},
   uBancoRelatorio in '..\PAS\Banco\uBancoRelatorio.pas' {DM_REL: TDataModule},
-  uClasseRelatorio in '..\PAS\Classe\uClasseRelatorio.pas';
+  uClasseRelatorio in '..\PAS\Classe\uClasseRelatorio.pas',
+  uClasseSQL in '..\PAS\Classe\uClasseSQL.pas';
 
 {$R *.res}
 

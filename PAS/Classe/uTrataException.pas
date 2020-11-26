@@ -32,12 +32,16 @@ var
 begin
   AssignFile(txtLog,LogFile);
   if FileExists(LogFile) then
+   // escreve no arequivo se ele existi
     Append(txtLog)
   else
+  // rescreve erro
     Rewrite(txtLog);
   try
+    // Escreve o Erro e a data e a hora do Erro
     Writeln(txtLog, FormatDateTime('dd/mm/YY hh:mm:ss - ',Now) + Value);
   finally
+  // Fecha arquivo
     CloseFile(txtLog);
   end;
 end;

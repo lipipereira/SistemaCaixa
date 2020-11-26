@@ -52,6 +52,7 @@ Type
     function Alterar : Boolean;
     function Deletar( Id : String ) : Boolean;
 
+
 end;
 
 

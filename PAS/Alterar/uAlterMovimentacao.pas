@@ -57,6 +57,7 @@ begin
     Valor := edtValor.Text;
     DtOpe := edtData.Text;
     Descri := mmDescri.Text;
+    // Chamar a function para alterar
     if Alterar then begin
       Application.MessageBox('Concluido!','Confirmação',MB_OK);
       Close;
@@ -69,7 +70,7 @@ end;
 procedure TfrmAlterMovimetacao.cmbContaEnter(Sender: TObject);
 begin
   // Lista os Grupos Caso aperte no ComboBox
-  cmbConta.Items := Conta.ListaConta( TipoConta( rgTipoConta.ItemIndex,false ) );
+  cmbConta.Items := Conta.ListaConta( TipoConta( rgTipoConta.ItemIndex ) );
 end;
 
 procedure TfrmAlterMovimetacao.FormCreate(Sender: TObject);

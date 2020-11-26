@@ -94,8 +94,6 @@ object frmCadMovimetacao: TfrmCadMovimetacao
       '')
     ParentFont = False
     TabOrder = 1
-    ExplicitTop = 184
-    ExplicitWidth = 561
   end
   object btnConfirmar: TBitBtn
     Left = 270

@@ -1,0 +1,36 @@
+unit uBancoRelatorio;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, Data.FMTBcd, frxClass, frxDBSet, Data.DB,
+  Data.SqlExpr;
+
+type
+  TDM_REL = class(TDataModule)
+    relExtrato: TfrxReport;
+    sqlRelExt: TSQLQuery;
+    sqlRelExtVALOR: TFMTBCDField;
+    sqlRelExtDTOPE: TDateField;
+    sqlRelExtNMBAN: TStringField;
+    sqlRelExtDESCRI: TBlobField;
+    sqlRelExtNMMOV: TStringField;
+    dsRelExt: TfrxDBDataset;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DM_REL: TDM_REL;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+uses uBancoDados;
+
+{$R *.dfm}
+
+end.

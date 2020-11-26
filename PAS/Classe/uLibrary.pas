@@ -6,26 +6,23 @@ uses
   Windows,Dialogs,Vcl.StdCtrls,System.Variants,Vcl.Mask,Vcl.Controls,Vcl.CheckLst,
   Data.SqlExpr, Vcl.DBGrids, Datasnap.DBClient;
 
- // procedure GeraRelatorio(const pReport: TfrxReport);
+  procedure GeraRelatorio(const pReport: TfrxReport);
   procedure CriarForm(T: TFormClass; F: TForm);
   procedure LimpaCampos();
-  //procedure Lst(SQLList : String; SQLQuery : TSQLQuery; Cds : TClientDataSet;DtIni,DtEnd : String);
+  procedure Lst(SQLList : String; SQLQuery : TSQLQuery; Cds : TClientDataSet;DtIni,DtEnd : String);
 
-  {function GetVersion(sFileName:string): string;
-  function Ret_Numero(Key: Char; Texto: string; EhDecimal: Boolean = False): Char; }
   function VerificaInativo(INV : Boolean): string;
- { function VerificaTipo(Tipo : Integer; Valor : String) : string;  }
-  function TipoConta( Tipo : Integer; Nome : Boolean ) : String;
+  function TipoConta( Tipo : Integer ) : String;
 
 
 implementation
-  {
+
 procedure GeraRelatorio(const pReport: TfrxReport);
 begin
   pReport.PrepareReport();
   pReport.ShowPreparedReport;
 end;
-   }
+
 procedure CriarForm(T: TFormClass; F: TForm);
 begin
   try
@@ -35,33 +32,7 @@ begin
     F.Free
   end;
 end;
-  {
-function GetVersion(sFileName: string): string;
-var
-  VerInfoSize  : DWORD;
-  VerInfo      : Pointer;
-  VerValueSize : DWORD;
-  VerValue     : PVSFixedFileInfo;
-  Dummy        : DWORD;
-begin
-  try
-    VerInfoSize := GetFileVersionInfoSize(PChar(sFileName), Dummy);
-    GetMem(VerInfo, VerInfoSize);
-    GetFileVersionInfo(PChar(sFileName), 0, VerInfoSize, VerInfo);
-    VerQueryValue(VerInfo, '\', Pointer(VerValue), VerValueSize);
-    with VerValue^ do
-    begin
-      Result := IntToStr(dwFileVersionMS shr 16);
-      Result := Result + '.' + IntToStr(dwFileVersionMS and $FFFF);
-      Result := Result + '.' + IntToStr(dwFileVersionLS shr 16);
-      Result := Result + '.' + IntToStr(dwFileVersionLS and $FFFF);
-    end;
-    FreeMem(VerInfo, VerInfoSize);
-  except //se ocorrer um erro retorna a versão 1.0.0.0, vai ocoorer um erro se o arquivo não tiver versão
-    Result:='1.0.0.0';
- end;
-end;
-  }
+
 procedure LimpaCampos();
 var i:Integer;
 begin
@@ -79,13 +50,15 @@ begin
     end;
   end;
 end;
-     {
+
+// Grava no componete SQlQuery e da o refresh no compomtes  TClientDataSet
 procedure Lst(SQLList : String; SQLQuery : TSQLQuery; Cds : TClientDataSet; DtIni,DtEnd : String);
 begin
   with SQLQuery do begin
     Close;
     SQL.Clear;
     SQL.Add(SQLList);
+    // Veririca se o SQL passado tem os parames de Data Inicio e Fim
     if (DtIni <> EmptyStr) or (DtEnd <> EmptyStr) then begin
       ParamByName('DTINI').Value := StrToDate(DtIni);
       ParamByName('DTEND').Value := StrToDate(DtEnd);
@@ -93,19 +66,11 @@ begin
     ExecSQL();
   end;
   Cds.Active := True;
+  // Dar o refresh no ClientDataSet
   Cds.Refresh;
 end;
 
-function  Ret_Numero(Key: Char; Texto: string; EhDecimal: Boolean = False): Char;
-begin
-  if not EhDecimal then begin
-    { Chr(8) = Back Space }             {
-    if not (CharInSet(Key,['0'..'9',#8])) then
-      Key := #0
-  end;
-  Result := Key;
-end;
-}
+// Retorno S ou N se tive marcado o CheckBox
 function VerificaInativo(INV : Boolean): string;
 begin
   if INV then
@@ -113,32 +78,18 @@ begin
   else
     Result := 'N'
 end;
-   {
-function VerificaTipo(Tipo : Integer ; Valor : String) : string;
+
+// Retorna se é R, D ou N de acordo com o RadioGroup marcado
+function TipoConta( Tipo : Integer ) : String;
 begin
   if Tipo < 0 then
-    raise Exception.Create(' Seleciona um tipo de movimento ')
-  else if Tipo = 0 then
-    Result :=  Valor
-  else
-    Result := '-'+Valor;
-end;
- }
-function TipoConta( Tipo : Integer ; Nome : Boolean ) : String;
-begin
-  if Tipo < 0 then
-    raise Exception.Create(' Seleciona um tipo de movimento ')
-  else if (Tipo = 0) and (Nome) then
-    Result := 'Receita'
-  else if ( Tipo = 1 ) and (Nome) then
-    Result := 'Despesa'
+    raise Exception.Create(' Selecione um tipo de Conta ')
   else if Tipo = 0 then
     Result := 'R'
   else if Tipo = 1 then
     Result := 'D'
   else
     Result := 'N';
-
 end;
 
 end.

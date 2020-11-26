@@ -53,9 +53,10 @@ begin
   with Conta do begin
     Id := pnCodigo.Caption;
     Nome := edtNomeConta.Text;
-    TpCon := TipoConta(rgTipoConta.ItemIndex,False);
+    TpCon := TipoConta(rgTipoConta.ItemIndex);
     Inativo := VerificaInativo(cbxInativo.Checked);
     IdGru := Grupo.IdGrupo(cmbGrupo.Items[cmbGrupo.ItemIndex]);
+    // Chama a function alterar
     if Alterar then begin
       Application.MessageBox('Concluido!','Confirmação',MB_OK);
       Close;

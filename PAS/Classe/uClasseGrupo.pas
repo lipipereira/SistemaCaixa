@@ -93,6 +93,7 @@ begin
   end;
 end;
 
+// Function para retorno o ultimo registro do banco
 function TGrupo.UltimoRegistro: Integer;
 begin
   with QryPesquisa do begin

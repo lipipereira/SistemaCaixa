@@ -125,15 +125,6 @@ object frmRelatorio: TfrmRelatorio
       TabOrder = 1
       OnClick = cbxFiltroGrupoClick
     end
-    object cbxFiltroAgrupa: TCheckBox
-      Left = 38
-      Top = 67
-      Width = 107
-      Height = 17
-      Caption = 'Agrupar Grupo'
-      Enabled = False
-      TabOrder = 2
-    end
   end
   object cmbConta: TComboBox
     Left = 168
@@ -164,12 +155,13 @@ object frmRelatorio: TfrmRelatorio
     TabOrder = 3
   end
   object btnGerar: TBitBtn
-    Left = 213
-    Top = 192
+    Left = 525
+    Top = 200
     Width = 75
     Height = 25
     Caption = 'Gerar'
     TabOrder = 4
+    OnClick = btnGerarClick
   end
   object rgTipoConta: TRadioGroup
     Left = 255

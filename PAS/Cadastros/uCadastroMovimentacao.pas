@@ -56,10 +56,12 @@ begin
     IdCon := Conta.IdCon(cmbConta.Items[cmbConta.ItemIndex]);
     Descri := mmDescri.Text;
     DtOpe := edtData.Text;
+    // Chamar a function Inserir Movimento
     if Inserir then begin
       Application.MessageBox('Concluido!','Confirmação',MB_OK);
       // Verifica se deseja cadastra outro grupo
       If (Application.MessageBox(' Deseja fazer outro cadastro? ', 'Salva',36) = 6) then begin
+        // Limpar campos
         LimpaCampos;
         Exit
       end;
@@ -72,6 +74,7 @@ end;
 
 procedure TfrmCadMovimetacao.FormCreate(Sender: TObject);
 begin
+  // Instancia as Class no form
   Conn := TConn.Create;
   Mov := TMovimento.Create(Conn);
   Conta := TConta.Create(Conn);
@@ -87,12 +90,14 @@ end;
 procedure TfrmCadMovimetacao.FormShow(Sender: TObject);
 begin
   edtData.Text := DateToStr( Date );
-  cmbConta.Items := Conta.ListaConta( TipoConta( rgTipoConta.ItemIndex,false ) );
+  // Lista as contas ativas no componete ao abrir form
+  cmbConta.Items := Conta.ListaConta( TipoConta( rgTipoConta.ItemIndex ) );
 end;
 
 procedure TfrmCadMovimetacao.rgTipoContaClick(Sender: TObject);
 begin
-  cmbConta.Items := Conta.ListaConta( TipoConta( rgTipoConta.ItemIndex,false ) );
+// Lista as contas ativas no componete ao clica no RadioGroup
+  cmbConta.Items := Conta.ListaConta( TipoConta( rgTipoConta.ItemIndex ) );
 end;
 
 end.

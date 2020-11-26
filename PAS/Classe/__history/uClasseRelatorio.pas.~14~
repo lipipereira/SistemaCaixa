@@ -1,0 +1,67 @@
+﻿unit uClasseRelatorio;
+
+interface
+
+uses
+  Data.SqlExpr, Data.DB,System.classes;
+
+Type
+  TRelatorio = Class
+  private
+
+  public
+    // Metodos
+    function SQLReceita_Despesa ( Banco, Conta, Valor : String ; Filtro : Integer ): String;
+    function SQLDivida ( Dt,Gru : Boolean;Grupo, Conta : String ): String;
+
+end;
+
+implementation
+
+uses
+  System.SysUtils, uClasseSQL;
+
+{ TRelatorio }
+
+function TRelatorio.SQLReceita_Despesa(Banco, Conta, Valor: String;
+  Filtro: Integer): String;
+var
+  Ban, Con, Val : String;
+begin
+  if Banco <> EmptyStr then
+    Ban := ' and ban.nmban = ' +QuotedStr(Banco);
+  if Conta <> EmptyStr then
+    Con := ' and con.nmcon = ' +QuotedStr(Conta);
+  if Valor <> EmptyStr then
+    case Filtro of // Verifica o filtro do valor
+      0: Begin
+        Val := ' and mov.valor = ' +QuotedStr(Valor);
+      End;
+      1: begin
+        Val := ' and mov.valor >= ' +QuotedStr(Valor);
+      end;
+      2: begin
+        Val := ' and mov.valor <= ' +QuotedStr(Valor);
+      end;
+    end;
+  Result := SQL_Relatorio + Ban + Con + Val ;
+end;
+
+function TRelatorio.SQLDivida( Dt,Gru : Boolean; Grupo, Conta : String ): String;
+var
+ Data, grup, con : String;
+begin
+  if Dt then
+    Data := ' where mov.dtope between :DTINI and :DTEND ';
+  if Grupo <> EmptyStr then
+    grup := ' and gru.cdgru = '+Grupo;
+  if Conta <> EmptyStr then
+    con := ' and con.cdcon = '+Conta;
+  if Gru then
+    Result := SQL_RelatorioGrupo + Data + grup
+  else
+     Result := SQL_RelatorioConta + Data + grup;
+
+end;
+
+end.

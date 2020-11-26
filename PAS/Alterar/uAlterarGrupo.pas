@@ -73,8 +73,11 @@ end;
 
 procedure TfrmAlterGrupo.FormShow(Sender: TObject);
 begin
+  // Pega os dados do ClientDataSet e colcoar no Panel
   pnCodGrupo.Caption := DM.cdsGrupo.Fields[0].Text;
+  // Pega o nome do Grupo e colocar no Edit
   edtNomeGrupo.Text := DM.cdsGrupo.Fields[1].Text;
+  // Verifica no banco e trazer se o Status esta ativo ou não
   if Grupo.Status(pnCodGrupo.Caption) = 'S' then
     cbxInativo.Checked := True
   else

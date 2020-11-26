@@ -45,7 +45,8 @@ begin
   with Conta do begin
     Nome := edtNomeConta.Text;
     IdGru := Grupo.IdGrupo(cbxGrupo.Items[cbxGrupo.ItemIndex]);
-    TpCon := TipoConta(rgTipoConta.ItemIndex,False);
+    TpCon := TipoConta(rgTipoConta.ItemIndex);
+    // Chama a function para fazer a inserção
     if Inserir then begin
       Application.MessageBox('Concluido!','Confirmação',MB_OK);
       // Verifica se deseja cadastra outro grupo
@@ -76,7 +77,9 @@ end;
 
 procedure TfrmCadastroConta.FormShow(Sender: TObject);
 begin
+  // Pega o ultimo registro do banco e colocar mais 1 e colocar no Panel
   pnCodConta.Caption := IntToStr(Conta.UltimoRegistro);
+  // Lista no componete comboBox os Grupos
   cbxGrupo.Items := Grupo.ListaGrupo;
 end;
 

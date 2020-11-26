@@ -33,16 +33,19 @@ uses uLibrary, uBancoDados, uCadastroGrupo, uAlterarGrupo;
 
 procedure TfrmGrupo.btnAlterarClick(Sender: TObject);
 begin
+  // Criar form alterar Grupo
   CriarForm(TfrmAlterGrupo,frmAlterGrupo);
 end;
 
 procedure TfrmGrupo.btnInserirClick(Sender: TObject);
 begin
+  // Criar form de Cadastro Grupo
   CriarForm(TfrmCadGrupo,frmCadGrupo);
 end;
 
 procedure TfrmGrupo.DBGrid1DblClick(Sender: TObject);
 begin
+  // Criar form alterar Grupo al click duas vezez
   CriarForm(TfrmAlterGrupo,frmAlterGrupo);
 end;
 

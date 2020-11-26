@@ -53,7 +53,7 @@ end;
 
 procedure TfrmConta.lstContaDblClick(Sender: TObject);
 begin
-  // Criar Form para Alteração da conta
+  // Criar Form para Alteração da conta  ao click duas vezes
   CriarForm(TfrmAlterConta,frmAlterConta);
 end;
 
