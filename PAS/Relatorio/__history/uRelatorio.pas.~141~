@@ -64,19 +64,35 @@ begin
   );
 
   if cbxFiltroGrupo.Checked then begin
+  // Monta o SQl do Relatorio de Grupo e passa para o componete
     Lst(
       Rel.SQLCaixa(
         False ,cbxFiltroGrupo.Checked,cbxNeutro.Checked,
         gru,con
        ),DM_REL.sqlCaixaGrupo,DM_REL.relCaixaGrupo,EmptyStr,EmptyStr
     );
+    // Monta o SQL do totalizador e passa para o componete
+    Lst(
+      Rel.SQLCaixaTotalizador(
+        False ,cbxFiltroGrupo.Checked,cbxNeutro.Checked,
+        gru,con
+       ),DM_REL.sqlTotalizadores,DM_REL.relCaixaGrupo,EmptyStr,EmptyStr
+    );
     GeraRelatorio(DM_REL.relCaixaGrupo);
   end else begin
+    // Monta o SQl do Relatorio de COnta e passa para o componete
     Lst(
       Rel.SQLCaixa(
         true, cbxFiltroGrupo.Checked,cbxNeutro.Checked,
         gru,con
        ),DM_REL.sqlCaixaConta,DM_REL.relCaixaConta,edtIni.Text,edtEnd.Text
+    );
+    // Monta o SQL do totalizador e passa para o componete
+    Lst(
+      Rel.SQLCaixaTotalizador(
+        true, cbxFiltroGrupo.Checked,cbxNeutro.Checked,
+        gru,con
+       ),DM_REL.sqlTotalizadores,DM_REL.relCaixaConta,edtIni.Text,edtEnd.Text
     );
     GeraRelatorio(DM_REL.relCaixaConta);
   end;
@@ -137,9 +153,10 @@ end;
 
 procedure TfrmRelatorio.rgTipoContaClick(Sender: TObject);
 begin
-  if rg then
-
-  cmbConta.Items := Conta.ListaConta( TipoConta( rgTipoConta.ItemIndex ) );
+  if rgTipoConta.ItemIndex = 2 then
+    cmbConta.ItemIndex := -1
+  else
+    cmbConta.Items := Conta.ListaConta( TipoConta( rgTipoConta.ItemIndex ) );
 end;
 
 end.

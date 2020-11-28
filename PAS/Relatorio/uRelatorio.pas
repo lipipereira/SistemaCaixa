@@ -56,13 +56,6 @@ begin
   gru := Grupo.IdGrupo( cmbGrupo.Items[cmbGrupo.ItemIndex] );
   con := Conta.IdCon( cmbConta.Items[cmbConta.ItemIndex] );
 
-  ShowMessage(
-        Rel.SQLCaixa(
-        False ,cbxFiltroGrupo.Checked,cbxNeutro.Checked,
-        gru,con
-       )
-  );
-
   if cbxFiltroGrupo.Checked then begin
   // Monta o SQl do Relatorio de Grupo e passa para o componete
     Lst(

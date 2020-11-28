@@ -58,6 +58,8 @@ begin
       // Verifica se deseja cadastra outro grupo
       If (Application.MessageBox(' Deseja fazer outro cadastro? ', 'Salva',36) = 6) then begin
         LimpaCampos;
+        // Lista no componete comboBox os Grupos
+        cbxGrupo.Items := Grupo.ListaGrupo;
         Exit
       end;
     end else begin
