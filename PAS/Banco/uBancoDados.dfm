@@ -52,7 +52,8 @@ object DM: TDM
     MaxBlobSize = -1
     Params = <>
     SQL.Strings = (
-      'select * from figru')
+      'select * from figru'
+      'order by cdgru')
     SQLConnection = Banco
     Left = 104
     Top = 16
@@ -104,55 +105,6 @@ object DM: TDM
   object dsGrupo: TDataSource
     DataSet = cdsGrupo
     Left = 8
-    Top = 16
-  end
-  object TesteBanco: TSQLConnection
-    ConnectionName = 'SisCaixa'
-    DriverName = 'Firebird'
-    LoginPrompt = False
-    Params.Strings = (
-      'GetDriverFunc=getSQLDriverINTERBASE'
-      
-        'Database=C:\Projeto_codigo\Delphi_Projeto\SisCaixa\EXE\Dados\Dad' +
-        'os.FDB'
-      'DriverName=Firebird'
-      'DriverUnit=Data.DBXFirebird'
-      
-        'DriverPackageLoader=TDBXDynalinkDriverLoader,DbxCommonDriver230.' +
-        'bpl'
-      
-        'DriverAssemblyLoader=Borland.Data.TDBXDynalinkDriverLoader,Borla' +
-        'nd.Data.DbxCommonDriver,Version=23.0.0.0,Culture=neutral,PublicK' +
-        'eyToken=91d62ebb5b0d1b1b'
-      
-        'MetaDataPackageLoader=TDBXFirebirdMetaDataCommandFactory,DbxFire' +
-        'birdDriver230.bpl'
-      
-        'MetaDataAssemblyLoader=Borland.Data.TDBXFirebirdMetaDataCommandF' +
-        'actory,Borland.Data.DbxFirebirdDriver,Version=23.0.0.0,Culture=n' +
-        'eutral,PublicKeyToken=91d62ebb5b0d1b1b'
-      'LibraryName=dbxfb.dll'
-      'LibraryNameOsx=libsqlfb.dylib'
-      'VendorLib=fbclient.dll'
-      'VendorLibWin64=fbclient.dll'
-      'VendorLibOsx=/Library/Frameworks/Firebird.framework/Firebird'
-      'User_Name=sysdba'
-      'Password=masterkey'
-      'Role=RoleName'
-      'MaxBlobSize=-1'
-      'LocaleCode=0000'
-      'IsolationLevel=ReadCommitted'
-      'SQLDialect=3'
-      'CommitRetain=False'
-      'WaitOnLocks=True'
-      'TrimChar=False'
-      'BlobSize=-1'
-      'ErrorResourceFile='
-      'RoleName=RoleName'
-      'ServerCharSet='
-      'Trim Char=False')
-    Connected = True
-    Left = 320
     Top = 16
   end
   object sqlConta: TSQLQuery
@@ -230,7 +182,8 @@ object DM: TDM
     SQL.Strings = (
       'select mov.cdmov, con.nmcon, mov.valor, mov.dtope, mov.descri'
       'from fimov mov'
-      'inner join ficon con on con.cdcon = mov.cdcon')
+      'inner join ficon con on con.cdcon = mov.cdcon'
+      'order by mov.cdmov')
     SQLConnection = Banco
     Left = 104
     Top = 120

@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, uConn, Vcl.Menus,
-  Vcl.Buttons, Vcl.ExtCtrls;
+  Vcl.Buttons, Vcl.ExtCtrls, Vcl.ToolWin, Vcl.ComCtrls, uClasseMovimentacao;
 
 type
   TfrmTelaInicio = class(TForm)
@@ -22,6 +22,7 @@ type
     btnConta: TBitBtn;
     Label1: TLabel;
     btnMovimento: TBitBtn;
+    stbRodape: TStatusBar;
     procedure Grupo1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -32,6 +33,7 @@ type
     procedure btnGrupoClick(Sender: TObject);
     procedure btnContaClick(Sender: TObject);
     procedure btnMovimentoClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -92,6 +94,7 @@ begin
   DM.cdsGrupo.Active := True;
   DM.cdsConta.Active := True;
   DM.cdsMov.Active := True;
+
 end;
 
 procedure TfrmTelaInicio.FormKeyDown(Sender: TObject; var Key: Word;
@@ -99,6 +102,12 @@ procedure TfrmTelaInicio.FormKeyDown(Sender: TObject; var Key: Word;
 begin
   if Key = VK_ESCAPE then
     Close;
+end;
+
+procedure TfrmTelaInicio.FormShow(Sender: TObject);
+begin
+  // Pega a versão do sistema e coloca no StatusBar
+  stbRodape.Panels[0].Text := ' Versão: ' + GetVersion(Application.ExeName);
 end;
 
 procedure TfrmTelaInicio.Grupo1Click(Sender: TObject);

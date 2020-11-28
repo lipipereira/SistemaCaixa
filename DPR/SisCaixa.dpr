@@ -20,11 +20,11 @@ uses
   uCadastroMovimentacao in '..\PAS\Cadastros\uCadastroMovimentacao.pas' {frmCadMovimetacao},
   uAlterMovimentacao in '..\PAS\Alterar\uAlterMovimentacao.pas' {frmAlterMovimetacao},
   uRelatorio in '..\PAS\Relatorio\uRelatorio.pas' {frmRelatorio},
-  uBancoRelatorio in '..\PAS\Banco\uBancoRelatorio.pas' {DM_REL: TDataModule},
   uClasseRelatorio in '..\PAS\Classe\uClasseRelatorio.pas',
-  uClasseSQL in '..\PAS\Classe\uClasseSQL.pas';
+  uBancoRelatorio in '..\PAS\Banco\uBancoRelatorio.pas' {DM_REL: TDataModule};
 
-{$R *.res}
+
+  {$R *.res}
 
 begin
   Application.Initialize;

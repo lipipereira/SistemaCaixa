@@ -52,7 +52,6 @@ Type
     function Alterar : Boolean;
     function Deletar( Id : String ) : Boolean;
 
-
 end;
 
 
@@ -103,7 +102,7 @@ function TMovimento.Alterar: Boolean;
 begin
   with Qry do begin
     Close;
-    SQL.Text := ' update fimov set cdcon = :CDCON, valor = :VALOR, dtope = :DTOPE, describe = :DESCRI ' +
+    SQL.Text := ' update fimov set cdcon = :CDCON, valor = :VALOR, dtope = :DTOPE, descri = :DESCRI ' +
                 ' where cdmov = :CDMOV ';
     Params.ParamByName('CDCON').Value:= StrToInt(FIdCon);
     Params.ParamByName('VALOR').Value:= StrToFloat(FValor);
@@ -148,6 +147,9 @@ end;
 
 procedure TMovimento.SetDtOpe(const Value: String);
 begin
+  if (Value = '  /  /    ' )then
+    raise Exception.Create('Empreencha o Campo Data')
+  else
   FDtOpe := Value;
 end;
 
@@ -158,6 +160,9 @@ end;
 
 procedure TMovimento.SetIdCon(const Value: String);
 begin
+  if Value= EmptyStr then
+    raise Exception.Create('Empreencha o Campo Conta')
+  else
   FIdCon := Value;
 end;
 
@@ -178,6 +183,9 @@ end;
 
 procedure TMovimento.SetValor(const Value: String);
 begin
+  if Value = EmptyStr then
+    raise Exception.Create('Empreencha o Campo Valor')
+  else
   FValor := Value;
 end;
 

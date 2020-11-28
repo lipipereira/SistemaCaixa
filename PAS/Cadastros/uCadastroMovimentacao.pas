@@ -52,7 +52,7 @@ end;
 procedure TfrmCadMovimetacao.btnConfirmarClick(Sender: TObject);
 begin
   with Mov do begin
-    Valor := edtValor.Text;
+    Valor := VerificaTipo( rgTipoConta.ItemIndex,edtValor.Text);
     IdCon := Conta.IdCon(cmbConta.Items[cmbConta.ItemIndex]);
     Descri := mmDescri.Text;
     DtOpe := edtData.Text;
@@ -63,6 +63,10 @@ begin
       If (Application.MessageBox(' Deseja fazer outro cadastro? ', 'Salva',36) = 6) then begin
         // Limpar campos
         LimpaCampos;
+        // Lista as contas ativas no componete ao clica no RadioGroup
+        cmbConta.Items := Conta.ListaConta( TipoConta( rgTipoConta.ItemIndex ) );
+        // Pega data Atual
+        edtData.Text := DateToStr(Date);
         Exit
       end;
     end else begin

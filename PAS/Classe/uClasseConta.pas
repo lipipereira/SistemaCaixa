@@ -239,6 +239,9 @@ end;
 
 procedure TConta.SetIdGru(const Value: String);
 begin
+  if Value= EmptyStr then
+    raise Exception.Create('Empreencha o Campo Grupo')
+  else
   FIdGru := Value;
 end;
 
@@ -249,7 +252,10 @@ end;
 
 procedure TConta.SetNome(const Value: String);
 begin
-  FNome := Value;
+  if Value= EmptyStr then
+    raise Exception.Create('Empreencha o Campo Nome da Conta')
+  else
+    FNome := Value;
 end;
 
 procedure TConta.SetQry(const Value: TSQLQuery);

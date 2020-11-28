@@ -45,12 +45,13 @@ begin
       // Verifica se deseja cadastra outro grupo
       If (Application.MessageBox(' Deseja fazer outro cadastro? ', 'Salva',36) = 6) then begin
         LimpaCampos;
-        Exit
+        exit
       end;
     end else begin
       Application.MessageBox('O registro não foi alterado!','Atenção',MB_OK);
     end;
   end;
+  Close;
 end;
 
 procedure TfrmCadGrupo.FormCreate(Sender: TObject);

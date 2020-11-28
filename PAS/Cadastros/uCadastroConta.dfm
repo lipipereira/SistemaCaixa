@@ -115,6 +115,7 @@ object frmCadastroConta: TfrmCadastroConta
     Height = 33
     Caption = 'Cancelar'
     TabOrder = 4
+    OnClick = btnCancelarClick
   end
   object pnCodConta: TPanel
     Left = 8

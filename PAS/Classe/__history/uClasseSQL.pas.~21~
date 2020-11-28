@@ -1,0 +1,21 @@
+unit uClasseSQL;
+
+interface
+  // Função para retorna SQl do Relatorio
+  function SQL_RelatorioConta : String;
+  function SQL_RelatorioGrupo : String;
+
+implementation
+
+// Função para retorna SQl do Relatorio
+function SQL_RelatorioConta : String;
+begin
+  Result := '  ';
+end;
+
+function SQL_RelatorioGrupo : String;
+begin
+  Result := '  ';
+end;
+
+end.

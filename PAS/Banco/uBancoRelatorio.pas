@@ -4,24 +4,35 @@ interface
 
 uses
   System.SysUtils, System.Classes, Data.FMTBcd, frxClass, frxDBSet, Data.DB,
-  Data.SqlExpr;
+  Data.SqlExpr, Data.DBXFirebird;
 
 type
   TDM_REL = class(TDataModule)
-    relCaixa: TfrxReport;
-    sqlRelCai: TSQLQuery;
-    dsRelCai: TfrxDBDataset;
-    sqlRelCaiNMCON: TStringField;
-    sqlRelCaiDTOPE: TDateField;
-    sqlRelCaiDESCRI: TStringField;
-    sqlRelCaiENTRADAS: TFMTBCDField;
-    sqlRelCaiSAIDAS: TFMTBCDField;
+    relCaixaConta: TfrxReport;
+    dsCaixaConta: TfrxDBDataset;
+    sqlCaixaConta: TSQLQuery;
+    sqlCaixaContaNMCON: TStringField;
+    sqlCaixaContaDTOPE: TDateField;
+    sqlCaixaContaDESCRI: TStringField;
+    sqlCaixaContaENTRADA: TFMTBCDField;
+    sqlCaixaContaSAIDA: TFMTBCDField;
+    sqlCaixaContaNEUTRO: TFMTBCDField;
+    sqlCaixaContaSALDO: TFMTBCDField;
     relCaixaGrupo: TfrxReport;
-    sqlRelCaiGru: TSQLQuery;
-    dsRelCaixaGrupo: TfrxDBDataset;
-    sqlRelCaiGruNMGRU: TStringField;
-    sqlRelCaiGruENTRADA: TFMTBCDField;
-    sqlRelCaiGruSAIDAS: TFMTBCDField;
+    dsCaixaGrupo: TfrxDBDataset;
+    sqlCaixaGrupo: TSQLQuery;
+    sqlCaixaGrupoNMGRU: TStringField;
+    sqlCaixaGrupoENTRADA: TFMTBCDField;
+    sqlCaixaGrupoSAIDA: TFMTBCDField;
+    sqlCaixaGrupoNEUTRO: TFMTBCDField;
+    sqlCaixaGrupoSALDO: TFMTBCDField;
+    dsTotalizador: TfrxDBDataset;
+    sqlTotalizadores: TSQLQuery;
+    sqlTotalizadoresTOTAL_REGISTRO: TLargeintField;
+    sqlTotalizadoresSALDO_TOTAL: TFMTBCDField;
+    sqlTotalizadoresTOTAL_ENTRADA: TFMTBCDField;
+    sqlTotalizadoresTOTAL_SAIDA: TFMTBCDField;
+    sqlTotalizadoresTOTAL_NEUTRO: TFMTBCDField;
   private
     { Private declarations }
   public

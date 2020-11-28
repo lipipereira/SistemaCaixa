@@ -13,7 +13,6 @@ type
     cdsGrupo: TClientDataSet;
     dspGrupo: TDataSetProvider;
     dsGrupo: TDataSource;
-    TesteBanco: TSQLConnection;
     sqlGrupoCDGRU: TIntegerField;
     sqlGrupoNMGRU: TStringField;
     sqlGrupoDTOPE: TDateField;

@@ -125,6 +125,14 @@ object frmRelatorio: TfrmRelatorio
       TabOrder = 1
       OnClick = cbxFiltroGrupoClick
     end
+    object cbxNeutro: TCheckBox
+      Left = 24
+      Top = 70
+      Width = 97
+      Height = 17
+      Caption = 'Incluir Neutro'
+      TabOrder = 2
+    end
   end
   object cmbConta: TComboBox
     Left = 168
@@ -160,6 +168,7 @@ object frmRelatorio: TfrmRelatorio
     Width = 75
     Height = 25
     Caption = 'Gerar'
+    Enabled = False
     TabOrder = 4
     OnClick = btnGerarClick
   end
@@ -167,14 +176,13 @@ object frmRelatorio: TfrmRelatorio
     Left = 255
     Top = 8
     Width = 159
-    Height = 73
+    Height = 97
     Caption = 'Tipo da Conta'
     Enabled = False
-    ItemIndex = 0
     Items.Strings = (
       'Receita'
       'Despesa'
-      'Neutra')
+      'Todos')
     TabOrder = 5
     OnClick = rgTipoContaClick
   end

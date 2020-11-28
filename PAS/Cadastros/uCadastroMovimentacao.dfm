@@ -90,8 +90,6 @@ object frmCadMovimetacao: TfrmCadMovimetacao
     Font.Height = -13
     Font.Name = 'Tahoma'
     Font.Style = []
-    Lines.Strings = (
-      '')
     ParentFont = False
     TabOrder = 1
   end

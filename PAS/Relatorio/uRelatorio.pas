@@ -23,6 +23,7 @@ type
     Label5: TLabel;
     btnGerar: TBitBtn;
     rgTipoConta: TRadioGroup;
+    cbxNeutro: TCheckBox;
     procedure cbxFiltroContaClick(Sender: TObject);
     procedure cbxFiltroGrupoClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -42,38 +43,58 @@ var
   Grupo : TGrupo;
   Conta : TConta;
   Rel : TRelatorio;
+  gru, con : String;
 
 implementation
 
 {$R *.dfm}
 
-uses uLibrary, uTrataException, uBancoDados, uBancoRelatorio;
+uses uLibrary, uTrataException, uBancoDados, uBancoRelatorio, Data.FmtBcd;
 
 procedure TfrmRelatorio.btnGerarClick(Sender: TObject);
-var
-  gru, con : String;
 begin
-gru := Grupo.IdGrupo( cmbGrupo.Items[cmbGrupo.ItemIndex] );
-con := Conta.IdCon( cmbConta.Items[cmbConta.ItemIndex] );
-  if cbxFiltroGrupo.Checked then begin
+  gru := Grupo.IdGrupo( cmbGrupo.Items[cmbGrupo.ItemIndex] );
+  con := Conta.IdCon( cmbConta.Items[cmbConta.ItemIndex] );
 
-    with DM_REL.sqlRelCaiGru do begin
-    Close;
-    SQL.Clear;
-    SQL.Add( Rel.SQLCaixa( True,cbxFiltroGrupo.Checked,gru,con ) );
-    ParamByName('DTINI').AsDate := StrToDate(edtIni.Text);
-    ParamByName('DTEND').AsDate := StrToDate(edtEnd.Text);
+  ShowMessage(
+        Rel.SQLCaixa(
+        False ,cbxFiltroGrupo.Checked,cbxNeutro.Checked,
+        gru,con
+       )
+  );
+
+  if cbxFiltroGrupo.Checked then begin
+  // Monta o SQl do Relatorio de Grupo e passa para o componete
+    Lst(
+      Rel.SQLCaixa(
+        False ,cbxFiltroGrupo.Checked,cbxNeutro.Checked,
+        gru,con
+       ),DM_REL.sqlCaixaGrupo,DM_REL.relCaixaGrupo,EmptyStr,EmptyStr
+    );
+    // Monta o SQL do totalizador e passa para o componete
+    Lst(
+      Rel.SQLCaixaTotalizador(
+        False ,cbxFiltroGrupo.Checked,cbxNeutro.Checked,
+        gru,con
+       ),DM_REL.sqlTotalizadores,DM_REL.relCaixaGrupo,EmptyStr,EmptyStr
+    );
     GeraRelatorio(DM_REL.relCaixaGrupo);
-  end
   end else begin
-    with DM_REL.sqlRelCai do begin
-    Close;
-    SQL.Clear;
-    SQL.Add( Rel.SQLCaixa( True,cbxFiltroGrupo.Checked,gru,con ) );
-    ParamByName('DTINI').AsDate := StrToDate(edtIni.Text);
-    ParamByName('DTEND').AsDate := StrToDate(edtEnd.Text);
-    end;
-    GeraRelatorio(DM_REL.relCaixa);
+    // Monta o SQl do Relatorio de COnta e passa para o componete
+    Lst(
+      Rel.SQLCaixa(
+        true, cbxFiltroGrupo.Checked,cbxNeutro.Checked,
+        gru,con
+       ),DM_REL.sqlCaixaConta,DM_REL.relCaixaConta,edtIni.Text,edtEnd.Text
+    );
+    // Monta o SQL do totalizador e passa para o componete
+    Lst(
+      Rel.SQLCaixaTotalizador(
+        true, cbxFiltroGrupo.Checked,cbxNeutro.Checked,
+        gru,con
+       ),DM_REL.sqlTotalizadores,DM_REL.relCaixaConta,edtIni.Text,edtEnd.Text
+    );
+    GeraRelatorio(DM_REL.relCaixaConta);
   end;
 end;
 
@@ -83,11 +104,13 @@ begin
     cmbConta.Enabled := True;
     rgTipoConta.Enabled := True;
     cbxFiltroGrupo.Enabled := False;
+    btnGerar.Enabled := True;
   end else begin
     cmbConta.Enabled := False;
     rgTipoConta.Enabled := False;
     cmbConta.ItemIndex := -1;
     cbxFiltroGrupo.Enabled := True;
+    btnGerar.Enabled := False;
   end;
 end;
 
@@ -96,10 +119,14 @@ begin
   if cbxFiltroGrupo.Checked then begin
     cmbGrupo.Enabled := True;
     cbxFiltroConta.Enabled := False;
+    GroupBox1.Enabled := False;
+    btnGerar.Enabled := True;
   end else begin
     cmbGrupo.Enabled := False;
     cmbGrupo.ItemIndex := -1;
     cbxFiltroConta.Enabled := True;
+    btnGerar.Enabled := False;
+    GroupBox1.Enabled := True;
   end;
 end;
 
@@ -119,15 +146,17 @@ end;
 
 procedure TfrmRelatorio.FormShow(Sender: TObject);
 begin
+  cmbGrupo.Items := Grupo.ListaGrupo;
   edtIni.Text := DateToStr(Date);
   edtEnd.Text := DateToStr(Date + 30);
-  cmbConta.Items := Conta.ListaConta( TipoConta( rgTipoConta.ItemIndex ) );
-  cmbGrupo.Items := Grupo.ListaGrupo;
 end;
 
 procedure TfrmRelatorio.rgTipoContaClick(Sender: TObject);
 begin
-  cmbConta.Items := Conta.ListaConta( TipoConta( rgTipoConta.ItemIndex ) );
+  if rgTipoConta.ItemIndex = 2 then
+    cmbConta.ItemIndex := -1
+  else
+    cmbConta.Items := Conta.ListaConta( TipoConta( rgTipoConta.ItemIndex ) );
 end;
 
 end.

@@ -22,6 +22,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnConfirmarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -39,6 +40,11 @@ implementation
 {$R *.dfm}
 
 uses uLibrary, uTrataException;
+
+procedure TfrmCadastroConta.btnCancelarClick(Sender: TObject);
+begin
+  Close;
+end;
 
 procedure TfrmCadastroConta.btnConfirmarClick(Sender: TObject);
 begin

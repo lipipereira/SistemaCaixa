@@ -51,12 +51,14 @@ Type
     function Status( Id : String ) : String;
     function ListaGrupo : TStrings;
     function IdGrupo( Nome : String ) : string;
+
 end;
 
 implementation
 
 uses
-  System.SysUtils, uBancoDados;
+  System.SysUtils, uBancoDados, uBancoRelatorio, uClasseRelatorio, uLibrary,
+  uRelatorio, uTrataException;
 
 { TGrupo }
 
