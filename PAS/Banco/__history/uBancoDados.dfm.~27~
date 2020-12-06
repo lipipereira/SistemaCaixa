@@ -8,9 +8,7 @@ object DM: TDM
     LoginPrompt = False
     Params.Strings = (
       'GetDriverFunc=getSQLDriverINTERBASE'
-      
-        'Database=C:\Projeto_codigo\Delphi_Projeto\SisCaixa\EXE\Dados\Dad' +
-        'os.FDB'
+      'Database=database.fdb'
       'DriverName=Firebird'
       'DriverUnit=Data.DBXFirebird'
       

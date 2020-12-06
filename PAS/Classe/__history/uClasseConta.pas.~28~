@@ -58,7 +58,6 @@ Type
     function TipoContaAlter ( Id : String ) : Integer;
     function ListaConta( TpConta : String ) : TStrings;
     function IdCon( Nome : String ) : string;
-    function VerificaConta : Boolean;
 
 end;
 
@@ -217,25 +216,6 @@ begin
   end;
 end;
 
-function TConta.VerificaConta : Boolean;
-var
-  count : Integer;
-begin
-  with QryPesquisa do begin
-    Close;
-    SQL.Text := ' select count(cdcon) from ficon where nmcon = :NMCON ';
-    Params.ParamByName('NMCON').Value := FNome;
-    try
-      Open;
-      count := FieldByName('count').AsInteger; // Retorna o registro do banco
-    finally
-      if count > 0 then
-        Result := True
-      else
-        Result := False;
-    end;
-  end;
-end;
 
 procedure TConta.SetDs(const Value: TDataSource);
 begin

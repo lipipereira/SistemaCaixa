@@ -15,7 +15,6 @@ object frmGrupo: TfrmGrupo
   KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
-  OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
@@ -83,14 +82,5 @@ object frmGrupo: TfrmGrupo
     Caption = 'Alterar'
     TabOrder = 2
     OnClick = btnAlterarClick
-  end
-  object btnDeletar: TBitBtn
-    Left = 257
-    Top = 16
-    Width = 96
-    Height = 41
-    Caption = 'Deletar'
-    TabOrder = 3
-    OnClick = btnDeletarClick
   end
 end

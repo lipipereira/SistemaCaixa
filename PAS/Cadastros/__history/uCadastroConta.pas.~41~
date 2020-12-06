@@ -52,14 +52,9 @@ begin
     Nome := edtNomeConta.Text;
     IdGru := Grupo.IdGrupo(cbxGrupo.Items[cbxGrupo.ItemIndex]);
     TpCon := TipoConta(rgTipoConta.ItemIndex);
-    // Verifica se a conta ja exite
-    if VerificaConta then begin
-      Application.MessageBox(' Conta ja existe! ','Atenção',MB_OK);
-      exit
-    end else
     // Chama a function para fazer a inserção
     if Inserir then begin
-      Application.MessageBox(' Concluido! ','Confirmação',MB_OK);
+      Application.MessageBox('Concluido!','Confirmação',MB_OK);
       // Verifica se deseja cadastra outro grupo
       If (Application.MessageBox(' Deseja fazer outro cadastro? ', 'Salva',36) = 6) then begin
         LimpaCampos;

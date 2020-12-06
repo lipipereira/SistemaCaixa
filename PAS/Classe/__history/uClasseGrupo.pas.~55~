@@ -51,8 +51,6 @@ Type
     function Status( Id : String ) : String;
     function ListaGrupo : TStrings;
     function IdGrupo( Nome : String ) : string;
-    function Deletar( Id : String ): Boolean;
-    function VerificaGrupo : Boolean;
 
 end;
 
@@ -177,41 +175,6 @@ begin
       Result := FieldByName('cdgru').AsString; // Retorna o registro do banco
     except
       Result := '0';
-    end;
-  end;
-end;
-
-function TGrupo.Deletar(Id: String): Boolean;
-begin
-  with Qry do begin
-    Close;
-    SQL.Text := ' delete from figru where cdgru = '+Id;
-    try
-      ExecSQL();
-      DM.cdsGrupo.Refresh;
-      Result := True;
-    except
-      Result := False;
-    end;
-  end;
-end;
-
-function TGrupo.VerificaGrupo: Boolean;
-var
-  count : Integer;
-begin
-  with QryPesquisa do begin
-    Close;
-    SQL.Text := ' select count(cdgru) from figru where nmgru = :NMGRU';
-    Params.ParamByName('NMGRU').Value := FNome;
-    try
-      Open;
-      count := FieldByName('count').AsInteger; // Retorna o registro do banco
-    finally
-      if count > 0 then
-        Result := True
-      else
-        Result := False;
     end;
   end;
 end;

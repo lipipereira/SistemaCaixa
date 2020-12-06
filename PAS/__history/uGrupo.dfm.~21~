@@ -31,7 +31,7 @@ object frmGrupo: TfrmGrupo
     Font.Height = -13
     Font.Name = 'Tahoma'
     Font.Style = []
-    Options = [dgTitles, dgRowLines, dgRowSelect]
+    Options = [dgTitles, dgRowLines, dgRowSelect, dgConfirmDelete]
     ParentFont = False
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET

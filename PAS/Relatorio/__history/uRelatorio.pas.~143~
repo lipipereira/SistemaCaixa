@@ -43,6 +43,7 @@ var
   Grupo : TGrupo;
   Conta : TConta;
   Rel : TRelatorio;
+  gru, con : String;
 
 implementation
 
@@ -51,10 +52,7 @@ implementation
 uses uLibrary, uTrataException, uBancoDados, uBancoRelatorio, Data.FmtBcd;
 
 procedure TfrmRelatorio.btnGerarClick(Sender: TObject);
-var
-  gru, con : String;
 begin
-  // Pega o item selecionado no ComboBox
   gru := Grupo.IdGrupo( cmbGrupo.Items[cmbGrupo.ItemIndex] );
   con := Conta.IdCon( cmbConta.Items[cmbConta.ItemIndex] );
 
@@ -95,7 +93,6 @@ end;
 
 procedure TfrmRelatorio.cbxFiltroContaClick(Sender: TObject);
 begin
-  // Ativa ou Desativa componeste de acordo com o filtro marcado
   if cbxFiltroConta.Checked then begin
     cmbConta.Enabled := True;
     rgTipoConta.Enabled := True;
@@ -112,7 +109,6 @@ end;
 
 procedure TfrmRelatorio.cbxFiltroGrupoClick(Sender: TObject);
 begin
-  // Ativa ou Desativa componeste de acordo com o filtro marcado
   if cbxFiltroGrupo.Checked then begin
     cmbGrupo.Enabled := True;
     cbxFiltroConta.Enabled := False;
@@ -146,18 +142,16 @@ procedure TfrmRelatorio.FormShow(Sender: TObject);
 begin
   //Lista os Grupo
   cmbGrupo.Items := Grupo.ListaGrupo;
-  // Pegas a primeira e a ultima data do mês corrente
+  // Pegas as data do mês corrente
   edtIni.Text := DateToStr(StartofTheMonth(Date));
   edtEnd.Text := DateToStr(EndOfTheMonth(Date));
 end;
 
 procedure TfrmRelatorio.rgTipoContaClick(Sender: TObject);
 begin
-  // Coloca vazio no ComboBox se tive selecionado todos no filtro
   if rgTipoConta.ItemIndex = 2 then
     cmbConta.ItemIndex := -1
   else
-    // Lista os tipo de conta no ComboBox
     cmbConta.Items := Conta.ListaConta( TipoConta( rgTipoConta.ItemIndex ) );
 end;
 

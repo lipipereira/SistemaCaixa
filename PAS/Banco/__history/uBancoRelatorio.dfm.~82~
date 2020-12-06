@@ -11,7 +11,7 @@ object DM_REL: TDM_REL
     PrintOptions.Printer = 'Default'
     PrintOptions.PrintOnSheet = 0
     ReportOptions.CreateDate = 44162.567475659700000000
-    ReportOptions.LastChange = 44171.785925231500000000
+    ReportOptions.LastChange = 44163.400346550900000000
     ScriptLanguage = 'PascalScript'
     ScriptText.Strings = (
       'begin'
@@ -228,6 +228,26 @@ object DM_REL: TDM_REL
             '[dsCaixaConta."DTOPE"]')
           ParentFont = False
         end
+        object dsCaixaContaDESCRI: TfrxMemoView
+          IndexTag = 1
+          AllowVectorExport = True
+          Left = 195.555555560000000000
+          Top = 6.806534440000000000
+          Width = 180.630180000000000000
+          Height = 18.897650000000000000
+          DataField = 'DESCRI'
+          DataSet = dsCaixaConta
+          DataSetName = 'dsCaixaConta'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -13
+          Font.Name = 'Arial'
+          Font.Style = []
+          Frame.Typ = []
+          Memo.UTF8W = (
+            '[dsCaixaConta."DESCRI"]')
+          ParentFont = False
+        end
         object dsCaixaContaENTRADA: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
@@ -296,20 +316,6 @@ object DM_REL: TDM_REL
           Memo.UTF8W = (
             '[dsCaixaConta."SALDO"]')
           ParentFont = False
-        end
-        object dsCaixaContaDESCRI: TfrxMemoView
-          IndexTag = 1
-          AllowVectorExport = True
-          Left = 204.444444430000000000
-          Top = 0.568542230000000000
-          Width = 187.296846670000000000
-          Height = 18.897650000000000000
-          DataField = 'DESCRI'
-          DataSet = dsCaixaConta
-          DataSetName = 'dsCaixaConta'
-          Frame.Typ = []
-          Memo.UTF8W = (
-            '[dsCaixaConta."DESCRI"]')
         end
       end
       object PageFooter1: TfrxPageFooter
@@ -642,6 +648,7 @@ object DM_REL: TDM_REL
     Top = 24
   end
   object sqlCaixaConta: TSQLQuery
+    Active = True
     MaxBlobSize = -1
     Params = <>
     SQL.Strings = (
@@ -1196,21 +1203,6 @@ object DM_REL: TDM_REL
   object sqlTotalizadores: TSQLQuery
     MaxBlobSize = -1
     Params = <>
-    SQL.Strings = (
-      ''
-      '     select count(m.cdmov) as Total_Registro,'
-      '                sum( m.valor ) as Saldo_Total,'
-      
-        '     sum( case when c.tpcon = '#39'R'#39' then m.valor else 0.00 end ) a' +
-        's Total_Entrada,'
-      
-        '                sum( case when c.tpcon = '#39'D'#39' then m.valor else 0' +
-        '.00 end ) as Total_Saida,'
-      
-        '     sum( case when c.tpcon = '#39'N'#39' then m.valor else 0.00 end ) a' +
-        's Total_Neutro'
-      '                from fimov m'
-      '                inner join ficon c on c.cdcon = m.cdcon')
     SQLConnection = DM.Banco
     Left = 8
     Top = 128

@@ -179,7 +179,6 @@ object frmRelatorio: TfrmRelatorio
     Height = 97
     Caption = 'Tipo da Conta'
     Enabled = False
-    ItemIndex = 2
     Items.Strings = (
       'Receita'
       'Despesa'

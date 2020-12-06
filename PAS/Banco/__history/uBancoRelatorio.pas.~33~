@@ -11,6 +11,13 @@ type
     relCaixaConta: TfrxReport;
     dsCaixaConta: TfrxDBDataset;
     sqlCaixaConta: TSQLQuery;
+    sqlCaixaContaNMCON: TStringField;
+    sqlCaixaContaDTOPE: TDateField;
+    sqlCaixaContaDESCRI: TStringField;
+    sqlCaixaContaENTRADA: TFMTBCDField;
+    sqlCaixaContaSAIDA: TFMTBCDField;
+    sqlCaixaContaNEUTRO: TFMTBCDField;
+    sqlCaixaContaSALDO: TFMTBCDField;
     relCaixaGrupo: TfrxReport;
     dsCaixaGrupo: TfrxDBDataset;
     sqlCaixaGrupo: TSQLQuery;
@@ -26,13 +33,6 @@ type
     sqlTotalizadoresTOTAL_ENTRADA: TFMTBCDField;
     sqlTotalizadoresTOTAL_SAIDA: TFMTBCDField;
     sqlTotalizadoresTOTAL_NEUTRO: TFMTBCDField;
-    sqlCaixaContaNMCON: TStringField;
-    sqlCaixaContaDTOPE: TDateField;
-    sqlCaixaContaENTRADA: TFMTBCDField;
-    sqlCaixaContaSAIDA: TFMTBCDField;
-    sqlCaixaContaNEUTRO: TFMTBCDField;
-    sqlCaixaContaSALDO: TFMTBCDField;
-    sqlCaixaContaDESCRI: TStringField;
   private
     { Private declarations }
   public

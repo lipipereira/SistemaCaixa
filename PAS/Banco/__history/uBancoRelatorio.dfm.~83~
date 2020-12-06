@@ -300,8 +300,8 @@ object DM_REL: TDM_REL
         object dsCaixaContaDESCRI: TfrxMemoView
           IndexTag = 1
           AllowVectorExport = True
-          Left = 204.444444430000000000
-          Top = 0.568542230000000000
+          Left = 201.111111100000000000
+          Top = 5.012986670000000000
           Width = 187.296846670000000000
           Height = 18.897650000000000000
           DataField = 'DESCRI'
@@ -642,6 +642,7 @@ object DM_REL: TDM_REL
     Top = 24
   end
   object sqlCaixaConta: TSQLQuery
+    Active = True
     MaxBlobSize = -1
     Params = <>
     SQL.Strings = (
@@ -667,10 +668,6 @@ object DM_REL: TDM_REL
     object sqlCaixaContaDTOPE: TDateField
       FieldName = 'DTOPE'
     end
-    object sqlCaixaContaDESCRI: TStringField
-      FieldName = 'DESCRI'
-      Size = 80
-    end
     object sqlCaixaContaENTRADA: TFMTBCDField
       FieldName = 'ENTRADA'
       Precision = 18
@@ -690,6 +687,10 @@ object DM_REL: TDM_REL
       FieldName = 'SALDO'
       Precision = 18
       Size = 2
+    end
+    object sqlCaixaContaDESCRI: TStringField
+      FieldName = 'DESCRI'
+      Size = 80
     end
   end
   object relCaixaGrupo: TfrxReport
@@ -1194,6 +1195,7 @@ object DM_REL: TDM_REL
     Top = 128
   end
   object sqlTotalizadores: TSQLQuery
+    Active = True
     MaxBlobSize = -1
     Params = <>
     SQL.Strings = (

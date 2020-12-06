@@ -77,7 +77,6 @@ procedure TfrmGrupo.FormKeyDown(Sender: TObject; var Key: Word;
 begin
   if Key = VK_ESCAPE then
     Close
-  // Deleta ao aperta Ctrl + Delete
   else if (Shift = [ssCtrl]) and (Key = VK_DELETE) then
     // Verifica se deseja excuir o grupo
     If (Application.MessageBox(' Deseja excluir o grupo? ', 'Confirmação',36) = 6) then

@@ -39,22 +39,17 @@ procedure TfrmCadGrupo.btnConfirmarClick(Sender: TObject);
 begin
   with Grupo do begin
     Nome := edtNomeGrupo.Text;
-    // Verifica se o grupo ja existe
-    if VerificaGrupo then begin
-      Application.MessageBox('Grupo ja existe!','Atenção',MB_OK);
-      exit
-    end else
-      // Inserir no banco
-      if Inserir then begin
-        Application.MessageBox('Concluido!','Confirmação',MB_OK);
-        // Verifica se deseja cadastra outro grupo
-        If (Application.MessageBox(' Deseja fazer outro cadastro? ', 'Salva',36) = 6) then begin
-          LimpaCampos;
-          exit
-        end;
-      end else begin
-        Application.MessageBox('O registro não foi salvo!','Atenção',MB_OK);
+    // Inserir no banco
+    if Inserir then begin
+      Application.MessageBox('Concluido!','Confirmação',MB_OK);
+      // Verifica se deseja cadastra outro grupo
+      If (Application.MessageBox(' Deseja fazer outro cadastro? ', 'Salva',36) = 6) then begin
+        LimpaCampos;
+        exit
       end;
+    end else begin
+      Application.MessageBox('O registro não foi alterado!','Atenção',MB_OK);
+    end;
   end;
   Close;
 end;

@@ -28,11 +28,11 @@ type
     sqlTotalizadoresTOTAL_NEUTRO: TFMTBCDField;
     sqlCaixaContaNMCON: TStringField;
     sqlCaixaContaDTOPE: TDateField;
+    sqlCaixaContaDESCRI: TStringField;
     sqlCaixaContaENTRADA: TFMTBCDField;
     sqlCaixaContaSAIDA: TFMTBCDField;
     sqlCaixaContaNEUTRO: TFMTBCDField;
     sqlCaixaContaSALDO: TFMTBCDField;
-    sqlCaixaContaDESCRI: TStringField;
   private
     { Private declarations }
   public

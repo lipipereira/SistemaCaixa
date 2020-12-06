@@ -52,7 +52,7 @@ begin
     Nome := edtNomeConta.Text;
     IdGru := Grupo.IdGrupo(cbxGrupo.Items[cbxGrupo.ItemIndex]);
     TpCon := TipoConta(rgTipoConta.ItemIndex);
-    // Verifica se a conta ja exite
+
     if VerificaConta then begin
       Application.MessageBox(' Conta ja existe! ','Atenção',MB_OK);
       exit
