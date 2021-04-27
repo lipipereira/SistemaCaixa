@@ -52,8 +52,6 @@ begin
     if Alterar then begin
       Application.MessageBox('Concluido!','Confirmação',MB_OK);
       Close;
-    end else begin
-      Application.MessageBox('O registro não foi alterado!','Atenção',MB_OK);
     end;
   end;
 end;

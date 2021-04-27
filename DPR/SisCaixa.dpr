@@ -21,10 +21,10 @@ uses
   uAlterMovimentacao in '..\PAS\Alterar\uAlterMovimentacao.pas' {frmAlterMovimetacao},
   uRelatorio in '..\PAS\Relatorio\uRelatorio.pas' {frmRelatorio},
   uClasseRelatorio in '..\PAS\Classe\uClasseRelatorio.pas',
-  uBancoRelatorio in '..\PAS\Banco\uBancoRelatorio.pas' {DM_REL: TDataModule};
+  uBancoRelatorio in '..\PAS\Banco\uBancoRelatorio.pas' {DM_REL: TDataModule},
+  uBuscar in '..\PAS\uBuscar.pas' {frmBuscar};
 
-
-  {$R *.res}
+{$R *.res}
 
 begin
   Application.Initialize;
@@ -32,5 +32,6 @@ begin
   Application.CreateForm(TDM, DM);
   Application.CreateForm(TDM_REL, DM_REL);
   Application.CreateForm(TfrmTelaInicio, frmTelaInicio);
+  Application.CreateForm(TfrmBuscar, frmBuscar);
   Application.Run;
 end.

@@ -50,6 +50,7 @@ begin
         // Verifica se deseja cadastra outro grupo
         If (Application.MessageBox(' Deseja fazer outro cadastro? ', 'Salva',36) = 6) then begin
           LimpaCampos;
+          pnCodigo.Caption := ProxRegistro( 'GEN_FIGRU_ID', Conn.conexao );
           exit
         end;
       end else begin
@@ -76,7 +77,7 @@ end;
 procedure TfrmCadGrupo.FormShow(Sender: TObject);
 begin
   // Pega o ultimo registro do banco e adciona mais 1 e colocar no Panel
-  pnCodigo.Caption := IntToStr(Grupo.UltimoRegistro);
+  pnCodigo.Caption := ProxRegistro( 'GEN_FIGRU_ID', Conn.conexao );
 end;
 
 end.

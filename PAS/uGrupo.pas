@@ -78,15 +78,16 @@ begin
   if Key = VK_ESCAPE then
     Close
   // Deleta ao aperta Ctrl + Delete
-  else if (Shift = [ssCtrl]) and (Key = VK_DELETE) then
+  else if (Shift = [ssCtrl]) and (Key = VK_DELETE) then begin
     // Verifica se deseja excuir o grupo
-    If (Application.MessageBox(' Deseja excluir o grupo? ', 'Confirmação',36) = 6) then
+    If (Application.MessageBox(' Deseja excluir o grupo? ', 'Confirmação',36) = 6) then begin
       // Excluir o Grupo pegando o id do grupo
       if Grupo.Deletar( DM.cdsGrupo.Fields[0].Text )then
         Application.MessageBox(' Sucesso ao Excluir ','Confirmação',MB_OK)
       else
         Application.MessageBox(' Existe conta cadastrada com esse grupo, impossivel excluir ','Atenção',MB_OK)
-
+    end;
+  end;
 end;
 
 end.

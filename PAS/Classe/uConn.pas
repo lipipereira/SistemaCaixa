@@ -18,7 +18,7 @@ type
       procedure Caminho;
       property ConexaoBanco : TSQLConnection read GetConexao;
       property SqqGeral : TSQLQuery read SQLGeral write SQLGeral;
-
+    var conexao: TSQLConnection;
 end;
 
 implementation { Tconn }
@@ -100,6 +100,7 @@ begin
    end;
    SQLGeral := TSQLQuery.Create(Application);
    SQLGeral.SQLConnection := ConexaoBanco;
+   conexao := DM.Banco;
 end;
 
 destructor TConn.Destroy;

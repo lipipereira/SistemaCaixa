@@ -1,0 +1,50 @@
+unit uBancoRelatorio;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, Data.FMTBcd, frxClass, frxDBSet, Data.DB,
+  Data.SqlExpr, Data.DBXFirebird;
+
+type
+  TDM_REL = class(TDataModule)
+    relCaixaConta: TfrxReport;
+    dsCaixaConta: TfrxDBDataset;
+    sqlCaixaConta: TSQLQuery;
+    relCaixaGrupo: TfrxReport;
+    dsCaixaGrupo: TfrxDBDataset;
+    sqlCaixaGrupo: TSQLQuery;
+    dsTotalizador: TfrxDBDataset;
+    sqlTotalizadores: TSQLQuery;
+    sqlTotalizadoresTOTAL_REGISTRO: TLargeintField;
+    sqlTotalizadoresSALDO_TOTAL: TFMTBCDField;
+    sqlTotalizadoresTOTAL_ENTRADA: TFMTBCDField;
+    sqlTotalizadoresTOTAL_SAIDA: TFMTBCDField;
+    sqlTotalizadoresTOTAL_NEUTRO: TFMTBCDField;
+    sqlCaixaContaNMCON: TStringField;
+    sqlCaixaContaDTOPE: TDateField;
+    sqlCaixaContaENTRADA: TFMTBCDField;
+    sqlCaixaContaSAIDA: TFMTBCDField;
+    sqlCaixaContaNEUTRO: TFMTBCDField;
+    sqlCaixaContaSALDO: TFMTBCDField;
+    sqlCaixaContaDESCRI: TStringField;
+    sqlCaixaGrupoNMGRU: TStringField;
+    sqlCaixaGrupoSUM: TFMTBCDField;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DM_REL: TDM_REL;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+uses uBancoDados;
+
+{$R *.dfm}
+
+end.

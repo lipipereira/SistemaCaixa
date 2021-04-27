@@ -15,6 +15,7 @@ object frmConta: TfrmConta
   KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
+  OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
@@ -30,7 +31,7 @@ object frmConta: TfrmConta
     Font.Height = -13
     Font.Name = 'Tahoma'
     Font.Style = []
-    Options = [dgTitles, dgRowLines, dgRowSelect]
+    Options = [dgTitles, dgColLines, dgRowLines, dgRowSelect]
     ParentFont = False
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
@@ -41,35 +42,85 @@ object frmConta: TfrmConta
     OnDblClick = lstContaDblClick
     Columns = <
       item
+        Alignment = taCenter
         Expanded = False
         FieldName = 'CDCON'
+        Title.Alignment = taCenter
         Title.Caption = 'C'#243'digo'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = []
+        Width = 67
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'NMCON'
-        Title.Caption = 'Nome Conta'
+        Title.Alignment = taCenter
+        Title.Caption = 'Conta'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = []
         Width = 188
         Visible = True
       end
       item
+        Alignment = taCenter
         Expanded = False
         FieldName = 'NMGRU'
-        Title.Caption = 'Nome do Grupo'
-        Width = 138
+        Title.Alignment = taCenter
+        Title.Caption = 'Grupo'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = []
+        Width = 113
         Visible = True
       end
       item
+        Alignment = taCenter
+        Expanded = False
+        FieldName = 'TPCON'
+        Title.Alignment = taCenter
+        Title.Caption = 'Tipo'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = []
+        Width = 114
+        Visible = True
+      end
+      item
+        Alignment = taCenter
         Expanded = False
         FieldName = 'DTOPE'
+        Title.Alignment = taCenter
         Title.Caption = 'Cadastro'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = []
+        Width = 88
         Visible = True
       end
       item
+        Alignment = taCenter
         Expanded = False
         FieldName = 'INATIVO'
+        Title.Alignment = taCenter
         Title.Caption = 'Inativo'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = []
         Visible = True
       end>
   end
@@ -90,5 +141,14 @@ object frmConta: TfrmConta
     Caption = 'Alterar'
     TabOrder = 2
     OnClick = btnAlterarClick
+  end
+  object btnDeletar: TBitBtn
+    Left = 247
+    Top = 16
+    Width = 97
+    Height = 41
+    Caption = 'Deletar'
+    TabOrder = 3
+    OnClick = btnDeletarClick
   end
 end

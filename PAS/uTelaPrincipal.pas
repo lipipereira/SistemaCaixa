@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, uConn, Vcl.Menus,
-  Vcl.Buttons, Vcl.ExtCtrls, Vcl.ToolWin, Vcl.ComCtrls, uClasseMovimentacao;
+  Vcl.Buttons, Vcl.ExtCtrls, Vcl.ToolWin, Vcl.ComCtrls, uClasseMovimentacao,
+  IBX.IBDatabase, IBX.IBScript, Data.DB;
 
 type
   TfrmTelaInicio = class(TForm)
@@ -14,8 +15,6 @@ type
     Relatorio1: TMenuItem;
     Grupo1: TMenuItem;
     Conta1: TMenuItem;
-    Movimentos1: TMenuItem;
-    Movimentao1: TMenuItem;
     Movimentao2: TMenuItem;
     Panel1: TPanel;
     btnGrupo: TBitBtn;
@@ -23,6 +22,7 @@ type
     Label1: TLabel;
     btnMovimento: TBitBtn;
     stbRodape: TStatusBar;
+    Configurao1: TMenuItem;
     procedure Grupo1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -94,6 +94,9 @@ begin
   DM.cdsGrupo.Active := True;
   DM.cdsConta.Active := True;
   DM.cdsMov.Active := True;
+
+
+
 
 end;
 

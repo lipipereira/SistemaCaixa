@@ -95,6 +95,7 @@ object DM: TDM
     end
     object cdsGrupoINATIVO: TStringField
       FieldName = 'INATIVO'
+      OnGetText = cdsGrupoINATIVOGetText
       FixedChar = True
       Size = 1
     end
@@ -113,7 +114,9 @@ object DM: TDM
     MaxBlobSize = -1
     Params = <>
     SQL.Strings = (
-      'select con.cdcon, con.nmcon, gru.nmgru, con.dtope, con.inativo'
+      
+        'select con.cdcon, con.nmcon, gru.nmgru, con.dtope, con.inativo,c' +
+        'on.tpcon'
       'from ficon con'
       'inner join figru gru on gru.cdgru = con.cdgru'
       'order by con.cdcon')
@@ -137,6 +140,11 @@ object DM: TDM
     end
     object sqlContaINATIVO: TStringField
       FieldName = 'INATIVO'
+      FixedChar = True
+      Size = 1
+    end
+    object sqlContaTPCON: TStringField
+      FieldName = 'TPCON'
       FixedChar = True
       Size = 1
     end
@@ -164,6 +172,13 @@ object DM: TDM
     end
     object cdsContaINATIVO: TStringField
       FieldName = 'INATIVO'
+      OnGetText = cdsContaINATIVOGetText
+      FixedChar = True
+      Size = 1
+    end
+    object cdsContaTPCON: TStringField
+      FieldName = 'TPCON'
+      OnGetText = cdsContaTPCONGetText
       FixedChar = True
       Size = 1
     end
@@ -226,6 +241,7 @@ object DM: TDM
     end
     object cdsMovVALOR: TFMTBCDField
       FieldName = 'VALOR'
+      DisplayFormat = 'R$ #,###0.00'
       Precision = 18
       Size = 2
     end

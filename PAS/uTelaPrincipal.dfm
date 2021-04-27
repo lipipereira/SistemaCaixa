@@ -126,9 +126,8 @@ object frmTelaInicio: TfrmTelaInicio
       Caption = 'Relatorio'
       OnClick = Relatorio1Click
     end
-    object Movimentos1: TMenuItem
-      object Movimentao1: TMenuItem
-      end
+    object Configurao1: TMenuItem
+      Caption = 'Configura'#231#227'o'
     end
   end
 end

@@ -9,13 +9,14 @@ uses
   procedure GeraRelatorio(const pReport: TfrxReport);
   procedure CriarForm(T: TFormClass; F: TForm);
   procedure LimpaCampos();
-  procedure Lst(SQLList : String; SQLQuery : TSQLQuery;Rel : TfrxReport; DtIni,DtEnd : String);
+  procedure Lst(SQLList : String; SQLQuery : TSQLQuery;Rel : TfrxReport; DtIni,DtEnd,Grup : String);
 
   function GetVersion(sFileName:string): string;
   function VerificaInativo(INV : Boolean): string;
   function TipoConta( Tipo : Integer ) : String;
   function VerificaTipo(Tipo : Integer ; Valor : String) : string;
   function Remove(str: string):string;
+  function ProxRegistro( Generet: String; Conn: TSQLConnection ): String;
 
 implementation
 
@@ -56,7 +57,9 @@ begin
 end;
 
 // Grava no componete SQlQuery e da o refresh no compomtes  TClientDataSet
-procedure Lst(SQLList : String; SQLQuery : TSQLQuery;Rel : TfrxReport; DtIni,DtEnd : String);
+procedure Lst(SQLList : String; SQLQuery : TSQLQuery;Rel : TfrxReport; DtIni,DtEnd,Grup : String);
+var
+  Data : TDateTime;
 begin
   with SQLQuery do begin
     Close;
@@ -64,12 +67,22 @@ begin
     SQL.Add(SQLList);
     // Veririca se o SQL passado tem os parames de Data Inicio e Fim
     if (DtIni <> EmptyStr) or (DtEnd <> EmptyStr) then begin
-      ParamByName('DTINI').Value := StrToDate(DtIni);
-      ParamByName('DTEND').Value := StrToDate(DtEnd);
-      Rel.Variables['DTINI'] := StrToDate(DtIni);
-      Rel.Variables['DTEND'] := StrToDate(DtEnd);
+      // Valida as datas
+      if TryStrToDate( DtIni, Data ) and TryStrToDate( DtEnd, Data ) then begin
+        ParamByName('DTINI').Value := StrToDate(DtIni);
+        ParamByName('DTEND').Value := StrToDate(DtEnd);
+        Rel.Variables['DTINI'] := StrToDate(DtIni);
+        Rel.Variables['DTEND'] := StrToDate(DtEnd);
+        Rel.Variables['GRUP'] := QuotedStr( Grup );
+      end else begin
+        raise Exception.Create(' Data Inválida ');
+      end;
     end;
-    ExecSQL();
+    Open;
+  end;
+  if SQLQuery.IsEmpty then begin
+    Application.MessageBox(' Não há registro ','informativo',MB_OK);
+    Abort
   end;
 end;
 
@@ -139,16 +152,34 @@ var
    st: string;
 begin
 st:='';
-for x:=1 to length(str) do
-    begin
-    if (str[x] <> '-')
-//       (str[x] <> '.') and
-//     (str[x] <> ',') and
-//      (str[x] <> '/')
-    then
-    st:=st + str[x];
+for x:=1 to length(str) do begin
+  if (str[x] <> '-') and
+    (str[x] <> '.') and
+    (str[x] <> '$') and
+    (str[x] <> '/') and
+    (str[x] <> 'R') then
+    st := st + str[x];
+  end;
+  Remove := st;
+end;
+
+function ProxRegistro( Generet: String; Conn: TSQLConnection ): String;
+var
+  Qry : TSQLQuery;
+begin
+  // Criar os componentes
+  Qry := TSQLQuery.Create(nil);
+  Qry.SQLConnection := Conn;
+
+  with Qry do begin
+    try
+      Close;
+      SQL.Text := ' select gen_id('+Generet+',0) from rdb$database ';
+    finally
+      Open;
+      Result := IntToStr( FieldByName('gen_id').AsInteger + 1 );
     end;
-Remove:=st;
+  end;
 end;
 
 end.

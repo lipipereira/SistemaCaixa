@@ -31,7 +31,7 @@ object frmMovimentacao: TfrmMovimentacao
     Font.Height = -13
     Font.Name = 'Tahoma'
     Font.Style = []
-    Options = [dgTitles, dgRowLines, dgRowSelect]
+    Options = [dgTitles, dgColLines, dgRowLines, dgRowSelect]
     ParentFont = False
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
@@ -42,36 +42,70 @@ object frmMovimentacao: TfrmMovimentacao
     OnDblClick = DBGrid1DblClick
     Columns = <
       item
+        Alignment = taCenter
         Expanded = False
         FieldName = 'CDMOV'
+        Title.Alignment = taCenter
         Title.Caption = 'C'#243'digo'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = []
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'NMCON'
-        Title.Caption = 'Nome da Conta'
+        Title.Alignment = taCenter
+        Title.Caption = 'Conta'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = []
         Width = 128
         Visible = True
       end
       item
+        Alignment = taCenter
         Expanded = False
         FieldName = 'VALOR'
+        Title.Alignment = taCenter
         Title.Caption = 'Valor'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = []
         Width = 79
         Visible = True
       end
       item
+        Alignment = taCenter
         Expanded = False
         FieldName = 'DTOPE'
+        Title.Alignment = taCenter
         Title.Caption = 'Cadastro'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = []
+        Width = 87
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'DESCRI'
+        Title.Alignment = taCenter
         Title.Caption = 'Historico'
-        Width = 327
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = []
+        Width = 308
         Visible = True
       end>
   end

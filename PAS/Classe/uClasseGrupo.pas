@@ -60,7 +60,7 @@ implementation
 
 uses
   System.SysUtils, uBancoDados, uBancoRelatorio, uClasseRelatorio, uLibrary,
-  uRelatorio, uTrataException;
+  uRelatorio, uTrataException, Vcl.Forms, Winapi.Windows;
 
 { TGrupo }
 
@@ -114,19 +114,23 @@ end;
 
 function TGrupo.Alterar: Boolean;
 begin
-  with Qry do begin
-    Close;
-    SQL.Text := ' update FIgru set NMgru = :NMGRU , INATIVO = :INTV ' +
-                ' where CDGRU = :CDGRU ';
-    Params.ParamByName('NMGRU').Value:= FNome;
-    Params.ParamByName('INTV').Value:= FInativo;
-    Params.ParamByName('CDGRU').Value:= FId;
-    try
-      ExecSQL();
-      DM.cdsGrupo.Refresh;
-      Result := True;  // Retorna True se Executa sem erro
-    except
-      Result := False; // Retorna False se Executa com erro
+  if (FInativo = 'S') and ( VerificaGrupo ) then begin
+    Application.MessageBox(' Grupo possui conta, impossivel inativa ','Atenção',MB_OK);
+  end else begin
+    with Qry do begin
+      Close;
+      SQL.Text := ' update FIgru set NMgru = :NMGRU , INATIVO = :INTV ' +
+                  ' where CDGRU = :CDGRU ';
+      Params.ParamByName('NMGRU').Value:= FNome;
+      Params.ParamByName('INTV').Value:= FInativo;
+      Params.ParamByName('CDGRU').Value:= FId;
+      try
+        ExecSQL();
+        DM.cdsGrupo.Refresh;
+        Result := True;  // Retorna True se Executa sem erro
+      except
+        Result := False; // Retorna False se Executa com erro
+      end;
     end;
   end;
 end;

@@ -14,18 +14,6 @@ type
     relCaixaGrupo: TfrxReport;
     dsCaixaGrupo: TfrxDBDataset;
     sqlCaixaGrupo: TSQLQuery;
-    sqlCaixaGrupoNMGRU: TStringField;
-    sqlCaixaGrupoENTRADA: TFMTBCDField;
-    sqlCaixaGrupoSAIDA: TFMTBCDField;
-    sqlCaixaGrupoNEUTRO: TFMTBCDField;
-    sqlCaixaGrupoSALDO: TFMTBCDField;
-    dsTotalizador: TfrxDBDataset;
-    sqlTotalizadores: TSQLQuery;
-    sqlTotalizadoresTOTAL_REGISTRO: TLargeintField;
-    sqlTotalizadoresSALDO_TOTAL: TFMTBCDField;
-    sqlTotalizadoresTOTAL_ENTRADA: TFMTBCDField;
-    sqlTotalizadoresTOTAL_SAIDA: TFMTBCDField;
-    sqlTotalizadoresTOTAL_NEUTRO: TFMTBCDField;
     sqlCaixaContaNMCON: TStringField;
     sqlCaixaContaDTOPE: TDateField;
     sqlCaixaContaENTRADA: TFMTBCDField;
@@ -33,6 +21,24 @@ type
     sqlCaixaContaNEUTRO: TFMTBCDField;
     sqlCaixaContaSALDO: TFMTBCDField;
     sqlCaixaContaDESCRI: TStringField;
+    sqlCaixaGrupoNMGRU: TStringField;
+    sqlCaixaGrupoENTRADA: TFMTBCDField;
+    sqlCaixaGrupoSAIDA: TFMTBCDField;
+    sqlCaixaGrupoNEUTRO: TFMTBCDField;
+    sqlCaixaGrupoSALDO: TFMTBCDField;
+    relCaixaPorConta: TfrxReport;
+    dsCaixaPorConta: TfrxDBDataset;
+    sqlCaixaPorConta: TSQLQuery;
+    StringField1: TStringField;
+    DateField1: TDateField;
+    StringField2: TStringField;
+    FMTBCDField1: TFMTBCDField;
+    FMTBCDField2: TFMTBCDField;
+    FMTBCDField3: TFMTBCDField;
+    FMTBCDField4: TFMTBCDField;
+    dsTotalizador: TfrxDBDataset;
+    sqlTotalizador: TSQLQuery;
+    sqlTotalizadorSALDO: TFMTBCDField;
   private
     { Private declarations }
   public

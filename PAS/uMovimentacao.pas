@@ -75,7 +75,16 @@ procedure TfrmMovimentacao.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key = VK_ESCAPE then
-    Close;
+    Close
+  // Deleta ao aperta Ctrl + Delete
+  else if (Shift = [ssCtrl]) and (Key = VK_DELETE) then begin
+    // Verifica se deseja excuir o movimento
+    If (Application.MessageBox(' Deseja excluir o Movimento? ', 'Confirmação',36) = 6) then begin
+      // Excluir o Grupo pegando o id do movimento
+      if Mov.Deletar( DM.cdsMov.Fields[0].Text )then
+        Application.MessageBox(' Sucesso ao Excluir ','Confirmação',MB_OK)
+    end;
+  end;
 end;
 
 end.

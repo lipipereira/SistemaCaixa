@@ -65,6 +65,7 @@ begin
         LimpaCampos;
         // Lista no componete comboBox os Grupos
         cbxGrupo.Items := Grupo.ListaGrupo;
+        pnCodConta.Caption := ProxRegistro( 'GEN_FICON_ID',Conn.conexao );
         Exit
       end;
     end else begin
@@ -91,7 +92,7 @@ end;
 procedure TfrmCadastroConta.FormShow(Sender: TObject);
 begin
   // Pega o ultimo registro do banco e colocar mais 1 e colocar no Panel
-  pnCodConta.Caption := IntToStr(Conta.UltimoRegistro);
+  pnCodConta.Caption := ProxRegistro( 'GEN_FICON_ID',Conn.conexao );
   // Lista no componete comboBox os Grupos
   cbxGrupo.Items := Grupo.ListaGrupo;
 end;

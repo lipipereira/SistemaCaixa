@@ -57,15 +57,18 @@ Type
     function Status( Id : String ) : String;
     function TipoContaAlter ( Id : String ) : Integer;
     function ListaConta( TpConta : String ) : TStrings;
-    function IdCon( Nome : String ) : string;
+    function Tipo( ID : String ): Integer;
+    function IDCon( NOme : String ): String;
     function VerificaConta : Boolean;
-
+    function Deletar( Id : String ) : Boolean;
+    function VerificaMov( Id: String ): Boolean;
+    function TipoContaValidar ( Id : String ): String;
 end;
 
 implementation
 
 uses
-  System.SysUtils, uBancoDados;
+  System.SysUtils, uBancoDados, Vcl.Forms, Winapi.Windows;
 
 { TConta }
 
@@ -121,21 +124,27 @@ end;
 
 function TConta.Alterar: Boolean;
 begin
-  with Qry do begin
-    Close;
-    SQL.Text := ' update ficon set nmcon = :NMCON, inativo = :INTV, tpcon = :TPCON, cdgru = :CDGRU ' +
-                ' where cdcon = :CDCON ';
-    Params.ParamByName('NMCON').Value:= FNome;
-    Params.ParamByName('INTV').Value:= FInativo;
-    Params.ParamByName('TPCON').Value:= FTpCon;
-    Params.ParamByName('CDGRU').Value := StrToInt(FIdGru);
-    Params.ParamByName('CDCON').Value := StrToInt(FId);
-    try
-      ExecSQL();
-      DM.cdsConta.Refresh;
-      Result := True;  // Retorna True se Executa sem erro
-    except
-      Result := False; // Retorna False se Executa com erro
+  if (FInativo = 'S') and ( VerificaMov( FId ) ) then begin
+    Application.MessageBox(' Conta possuir movimento, impossivel inativa ','Atenção',MB_OK);
+  end else if ( VerificaMov( FId ) ) and ( FTpCon <> TipoContaValidar( FId ) ) then begin
+    Application.MessageBox(' Conta possuir movimento, impossivel alterar tipo de conta ','Atenção',MB_OK);
+  end else begin
+    with Qry do begin
+      Close;
+      SQL.Text := ' update ficon set nmcon = :NMCON, inativo = :INTV, tpcon = :TPCON, cdgru = :CDGRU ' +
+                  ' where cdcon = :CDCON ';
+      Params.ParamByName('NMCON').Value:= FNome;
+      Params.ParamByName('INTV').Value:= FInativo;
+      Params.ParamByName('TPCON').Value:= FTpCon;
+      Params.ParamByName('CDGRU').Value := StrToInt(FIdGru);
+      Params.ParamByName('CDCON').Value := StrToInt(FId);
+      try
+        ExecSQL();
+        DM.cdsConta.Refresh;
+        Result := True;  // Retorna True se Executa sem erro
+      except
+        Application.MessageBox('O registro não foi alterado!','Atenção',MB_OK);
+      end;
     end;
   end;
 end;
@@ -166,15 +175,9 @@ begin
       tp := FieldByName('tpcon').AsString; // Retorna o registro do banco
     finally
       case AnsiIndexStr(tp,['R','D','N']) of
-        0 : begin
-          Result := 0;
-        end;
-        1 : begin
-          Result := 1;
-        end;
-        2 : Begin
-          Result := 2;
-        End;
+        0 : Result := 0;
+        1 : Result := 1;
+        2 : Result := 2;
       end;
     end;
   end;
@@ -202,7 +205,31 @@ begin
   Result.EndUpdate;
 end;
 
-function TConta.IdCon(Nome: String): string;
+function TConta.Tipo( ID: String): Integer;
+begin
+  if ID <> EmptyStr then begin
+    with QryPesquisa do begin
+      Close;
+      SQL.Text := ' select tpcon from ficon where CDCON = :CDCON';
+      Params.ParamByName('CDCON').Value := ID;
+      try
+        Open;
+        if FieldByName('tpcon').AsString = 'R' then
+          Result := 0
+        else if FieldByName('tpcon').AsString = 'D' then
+          Result := 1
+        else if FieldByName('tpcon').AsString = 'N' then
+          Result := 2
+        else
+          Result := -1;
+      except
+        Result := 0;
+      end;
+    end;
+  end;
+end;
+
+function TConta.IDCon( Nome : String ): String;
 begin
   with QryPesquisa do begin
     Close;
@@ -210,11 +237,12 @@ begin
     Params.ParamByName('NMCON').Value := Nome;
     try
       Open;
-      Result := FieldByName('cdcon').AsString; // Retorna o registro do banco
+      Result := FieldByName('cdcon').AsString;
     except
       Result := '0';
     end;
   end;
+
 end;
 
 function TConta.VerificaConta : Boolean;
@@ -233,6 +261,53 @@ begin
         Result := True
       else
         Result := False;
+    end;
+  end;
+end;
+
+function TConta.Deletar( Id: String ): Boolean;
+begin
+  with Qry do begin
+    Close;
+    SQL.Text := ' delete from ficon where cdcon = :CDCON ' ;
+    Params.ParamByName('CDCON').Value := StrToInt(Id);
+    try
+      ExecSQL();
+      DM.cdsConta.Refresh;
+      Result := True;  // Retorna True se Executa sem erro
+    except
+      Result := False; // Retorna False se Executa com erro
+    end;
+  end;
+end;
+
+function TConta.VerificaMov( Id: String ): Boolean;
+begin
+  with Qry do begin
+    Close;
+    SQL.Text := ' select count(cdcon) from fimov where cdcon = :CDCON ' ;
+    Params.ParamByName('CDCON').Value := StrToInt(Id);
+    try
+      Open;
+      if FieldByName('count').AsInteger > 0 then
+        Result := True
+      else
+        Result := False;
+    except
+      Result := False;
+    end;
+  end;
+end;
+
+function TConta.TipoContaValidar( Id : String ): String;
+begin
+  with QryPesquisa do begin
+    Close;
+    SQL.Text := ' select tpcon from ficon where cdcon = '+Id;
+    try
+      Open;
+    finally
+      Result := FieldByName('tpcon').AsString;
     end;
   end;
 end;

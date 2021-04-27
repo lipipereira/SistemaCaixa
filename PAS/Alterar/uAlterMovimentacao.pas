@@ -17,16 +17,14 @@ type
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
-    cmbConta: TComboBox;
     rgTipoConta: TRadioGroup;
     Label4: TLabel;
+    txtNome: TLabel;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnCancelarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure cmbContaEnter(Sender: TObject);
     procedure btnConfirmarClick(Sender: TObject);
-    procedure rgTipoContaEnter(Sender: TObject);
   private
     { Private declarations }
   public
@@ -54,8 +52,8 @@ procedure TfrmAlterMovimetacao.btnConfirmarClick(Sender: TObject);
 begin
   with Mov do begin
     Id := DM.cdsMov.Fields[0].Text;
-    IdCon := Conta.IdCon(cmbConta.Items[cmbConta.ItemIndex]);
-    Valor := VerificaTipo( rgTipoConta.ItemIndex,edtValor.Text);
+    IdCon := Conta.IdCon(txtNome.Caption);
+    Valor := VerificaTipo( rgTipoConta.ItemIndex, edtValor.Text );
     DtOpe := edtData.Text;
     Descri := mmDescri.Text;
     // Chamar a function para alterar
@@ -66,12 +64,6 @@ begin
       Application.MessageBox('O registro não foi alterado!','Atenção',MB_OK);
     end;
   end;
-end;
-
-procedure TfrmAlterMovimetacao.cmbContaEnter(Sender: TObject);
-begin
-  // Lista os Grupos Caso aperte no ComboBox
-  cmbConta.Items := Conta.ListaConta( TipoConta( rgTipoConta.ItemIndex ) );
 end;
 
 procedure TfrmAlterMovimetacao.FormCreate(Sender: TObject);
@@ -91,20 +83,12 @@ end;
 procedure TfrmAlterMovimetacao.FormShow(Sender: TObject);
 begin
   edtData.Text := DM.cdsMov.Fields[3].Text;
-  edtValor.Text := Remove(DM.cdsMov.Fields[2].text);
+  edtValor.Text := Trim(Remove(DM.cdsMov.Fields[2].text));
   mmDescri.Lines.Add( DM.cdsMov.Fields[4].Text );
-  // Adcionar o campo do ClientDataset selecionado no ComboBox e colocar ele em primeiro
-  cmbConta.Items.Add(DM.cdsMov.Fields[1].Text);
-  cmbConta.ItemIndex := 0;
+  txtNome.Caption := DM.cdsMov.Fields[1].Text;
   // Marca no RadioGroup o Tipo da Conta
-  rgTipoConta.ItemIndex := Conta.TipoContaAlter(Conta.IdCon(cmbConta.Items[cmbConta.ItemIndex]));
+  rgTipoConta.ItemIndex := Conta.TipoContaAlter(Conta.IdCon(txtNome.Caption));
 
-end;
-
-procedure TfrmAlterMovimetacao.rgTipoContaEnter(Sender: TObject);
-begin
-  // Limpar ComboBox ao seleciona um tipo de movimento
-  cmbConta.Clear;
 end;
 
 end.

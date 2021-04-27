@@ -1,0 +1,201 @@
+unit uRelatorio;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.CheckLst, Vcl.Mask,
+  Vcl.Buttons, uConn, uClasseGrupo, uClasseConta, uClasseRelatorio, Vcl.ExtCtrls,DateUtils;
+
+type
+  TfrmRelatorio = class(TForm)
+    GroupBox1: TGroupBox;
+    edtIni: TMaskEdit;
+    edtEnd: TMaskEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    gbFiltros: TGroupBox;
+    cbxFiltroConta: TCheckBox;
+    cbxFiltroGrupo: TCheckBox;
+    Label4: TLabel;
+    cmbGrupo: TComboBox;
+    Label5: TLabel;
+    btnGerar: TBitBtn;
+    rgTipoConta: TRadioGroup;
+    cbxNeutro: TCheckBox;
+    btnBuscar: TBitBtn;
+    edtConta: TEdit;
+    cbxPorGrupo: TCheckBox;
+    procedure cbxFiltroContaClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormCreate(Sender: TObject);
+    procedure btnGerarClick(Sender: TObject);
+    procedure btnBuscarClick(Sender: TObject);
+    procedure edtContaKeyPress(Sender: TObject; var Key: Char);
+    procedure cbxFiltroGrupoClick(Sender: TObject);
+    procedure edtContaChange(Sender: TObject);
+    procedure cbxPorGrupoClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmRelatorio: TfrmRelatorio;
+  Conn : TConn;
+  Grupo : TGrupo;
+  Conta : TConta;
+  Rel : TRelatorio;
+
+implementation
+
+{$R *.dfm}
+
+uses uLibrary, uTrataException, uBancoDados, uBancoRelatorio, Data.FmtBcd,
+  uBuscar;
+
+procedure TfrmRelatorio.btnBuscarClick(Sender: TObject);
+begin
+  edtConta.text := TfrmBuscar.Buscar( ' select * from ficon ', 'Conta' );
+  rgTipoConta.ItemIndex := Conta.Tipo( IDBuscar );
+end;
+
+procedure TfrmRelatorio.btnGerarClick(Sender: TObject);
+var
+  gru : String;
+begin
+  // Pega o item selecionado no ComboBox
+  gru := Grupo.IdGrupo( cmbGrupo.Items[cmbGrupo.ItemIndex] );
+
+  if cbxFiltroGrupo.Checked then begin
+  // Monta o SQl do Relatorio
+    Lst(
+      Rel.SQLCaixa(
+        cbxFiltroGrupo.Checked,cbxNeutro.Checked,
+        gru,IDBuscar
+       ),DM_REL.sqlCaixaGrupo,DM_REL.relCaixaGrupo,edtIni.Text,edtEnd.Text,EmptyStr
+    );
+    GeraRelatorio(DM_REL.relCaixaGrupo);
+  end else begin
+      if cbxPorGrupo.Checked then begin
+        if cmbGrupo.Text = EmptyStr then begin
+          Application.MessageBox(' Selecione um grupo ','Aviso',MB_OK);
+        end else begin
+          // Monta o SQl do Relatorio
+          Lst(
+            Rel.SQLCaixa(
+              cbxFiltroGrupo.Checked,cbxNeutro.Checked,
+              gru,IDBuscar
+             ),DM_REL.sqlCaixaPorConta,DM_REL.relCaixaPorConta,edtIni.Text,edtEnd.Text, cmbGrupo.Text
+          );
+          Lst(
+            Rel.SQLCaixaTotalizador(
+              cbxFiltroGrupo.Checked,cbxNeutro.Checked,
+              gru,IDBuscar
+             ),DM_REL.sqlTotalizador,DM_REL.relCaixaConta,edtIni.Text,edtEnd.Text, EmptyStr
+          );
+          GeraRelatorio(DM_REL.relCaixaPorConta);
+        end;
+      end else begin
+        // Monta o SQl do Relatorio
+        Lst(
+          Rel.SQLCaixa(
+            cbxFiltroGrupo.Checked,cbxNeutro.Checked,
+            EmptyStr,IDBuscar
+           ),DM_REL.sqlCaixaConta,DM_REL.relCaixaConta,edtIni.Text,edtEnd.Text, EmptyStr
+        );
+        Lst(
+          Rel.SQLCaixaTotalizador(
+            cbxFiltroGrupo.Checked,cbxNeutro.Checked,
+            EmptyStr,IDBuscar
+           ),DM_REL.sqlTotalizador,DM_REL.relCaixaConta,edtIni.Text,edtEnd.Text, EmptyStr
+        );
+        GeraRelatorio(DM_REL.relCaixaConta);
+      end;
+  end;
+end;
+
+procedure TfrmRelatorio.cbxFiltroContaClick(Sender: TObject);
+begin
+  // Ativa ou Desativa componeste de acordo com o filtro marcado
+  if cbxFiltroConta.Checked then begin
+    cbxFiltroGrupo.Enabled := False;
+    btnBuscar.Enabled := True;
+    edtConta.Enabled := True;
+    btnGerar.Enabled := True;
+    cbxFiltroGrupo.Checked := False;
+    cbxPorGrupo.Enabled := True;
+  end else begin
+    cbxFiltroGrupo.Enabled := True;
+    btnBuscar.Enabled := False;
+    edtConta.Enabled := False;
+    btnGerar.Enabled := False;
+    edtConta.Text := EmptyStr;
+    cbxPorGrupo.Enabled := False;
+  end;
+end;
+
+procedure TfrmRelatorio.cbxFiltroGrupoClick(Sender: TObject);
+begin
+  // Ativa ou Desativa componeste de acordo com o filtro marcado
+  if cbxFiltroGrupo.Checked then begin
+    btnGerar.Enabled := True;
+  end else begin
+    cmbGrupo.Text := EmptyStr;
+  end;
+end;
+
+procedure TfrmRelatorio.cbxPorGrupoClick(Sender: TObject);
+begin
+  if cbxPorGrupo.Checked then begin
+    cmbGrupo.Enabled := True;
+  end else begin
+    cmbGrupo.Enabled := False;
+    cmbGrupo.Text := EmptyStr;
+  end;
+end;
+
+procedure TfrmRelatorio.edtContaChange(Sender: TObject);
+begin
+  if edtConta.Text = EmptyStr then begin
+    IDBuscar := EmptyStr;
+    rgTipoConta.ItemIndex := 2;
+  end;
+end;
+
+procedure TfrmRelatorio.edtContaKeyPress(Sender: TObject; var Key: Char);
+begin
+  if Key = #13 then begin
+    edtConta.text := TfrmBuscar.Buscar( 'select * from ficon', 'Conta' );
+    rgTipoConta.ItemIndex := Conta.Tipo( IDBuscar );
+  end;
+end;
+
+procedure TfrmRelatorio.FormCreate(Sender: TObject);
+begin
+  // Instancia as Classes
+  Conn := TConn.Create;
+  Grupo := TGrupo.Create(Conn);
+  Conta := TConta.Create(Conn);
+  IDBuscar := EmptyStr;
+end;
+
+procedure TfrmRelatorio.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if Key = VK_ESCAPE then
+    Close;
+end;
+
+procedure TfrmRelatorio.FormShow(Sender: TObject);
+begin
+  //Lista os Grupo
+  cmbGrupo.Items := Grupo.ListaGrupo;
+  // Pegas a primeira e a ultima data do mês corrente
+  edtIni.Text := DateToStr(StartofTheMonth(Date));
+  edtEnd.Text := DateToStr(EndOfTheMonth(Date));
+end;
+
+end.

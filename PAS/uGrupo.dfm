@@ -5,7 +5,7 @@ object frmGrupo: TfrmGrupo
   BorderStyle = bsSingle
   Caption = 'Grupo'
   ClientHeight = 290
-  ClientWidth = 677
+  ClientWidth = 492
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,7 +22,7 @@ object frmGrupo: TfrmGrupo
   object DBGrid1: TDBGrid
     Left = 0
     Top = 76
-    Width = 677
+    Width = 492
     Height = 214
     Align = alBottom
     DataSource = DM.dsGrupo
@@ -42,27 +42,57 @@ object frmGrupo: TfrmGrupo
     OnDblClick = DBGrid1DblClick
     Columns = <
       item
+        Alignment = taCenter
         Expanded = False
         FieldName = 'CDGRU'
+        Title.Alignment = taCenter
         Title.Caption = 'C'#243'digo'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = []
+        Width = 60
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'NMGRU'
-        Title.Caption = 'Nome do grupo'
+        Title.Alignment = taCenter
+        Title.Caption = 'Grupo'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = []
+        Width = 245
         Visible = True
       end
       item
+        Alignment = taCenter
         Expanded = False
         FieldName = 'DTOPE'
+        Title.Alignment = taCenter
         Title.Caption = 'Cadastro'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = []
+        Width = 89
         Visible = True
       end
       item
+        Alignment = taCenter
         Expanded = False
         FieldName = 'INATIVO'
+        Title.Alignment = taCenter
         Title.Caption = 'Inativo'
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -13
+        Title.Font.Name = 'Tahoma'
+        Title.Font.Style = []
         Visible = True
       end>
   end

@@ -49,6 +49,14 @@ type
     sqlMovDTOPE: TDateField;
     sqlMovDESCRI: TStringField;
     cdsMovDESCRI: TStringField;
+    sqlContaTPCON: TStringField;
+    cdsContaTPCON: TStringField;
+    procedure cdsGrupoINATIVOGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure cdsContaINATIVOGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
+    procedure cdsContaTPCONGetText(Sender: TField; var Text: string;
+      DisplayText: Boolean);
   private
     { Private declarations }
   public
@@ -63,5 +71,34 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
+
+procedure TDM.cdsContaINATIVOGetText(Sender: TField; var Text: string;
+  DisplayText: Boolean);
+begin
+  if Sender.AsString = 'S' then
+    Text := 'Sim'
+  else
+    Text := 'Não';
+end;
+
+procedure TDM.cdsContaTPCONGetText(Sender: TField; var Text: string;
+  DisplayText: Boolean);
+begin
+  if Sender.AsString = 'R' then
+    Text := 'Receita'
+  else if Sender.AsString = 'N' then
+    Text := 'Neutra'
+  else
+    Text := 'Despesa';
+end;
+
+procedure TDM.cdsGrupoINATIVOGetText(Sender: TField; var Text: string;
+  DisplayText: Boolean);
+begin
+  if Sender.AsString = 'S' then
+    Text := 'Sim'
+  else
+    Text := 'Não';
+end;
 
 end.
